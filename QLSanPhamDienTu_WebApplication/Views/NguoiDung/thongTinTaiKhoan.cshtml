@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "thongTinTaiKhoan";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+@using QLSanPhamDienTu_WebApplication.Models;
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+}
+<style type="text/css">
+    table {
+        border-collapse: collapse;
+    }
+</style>
+@using (Html.BeginForm("thongTinTaiKhoan","NguoiDung", new { @maKhachHang = kh.maKhachHang }))
+{
+    @Html.AntiForgeryToken(){
+    @Html.ValidationSummary(true){
+        <div class="card">
+            <div class="card-header">
+                <span>Thông tin tài khoản</span>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <td class="text-muted" style="font-size:11px; font-weight:100; width:100px">Họ tên</td>
+                        <td>
+                            @Html.TextBox("HoTen", kh.tenKhachHang, new { @class = "form-control", @type = "text", @style = "width:400px; height: 30px; font-size:12px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted" style="font-size:11px; font-weight:100">Số điện thoại</td>
+                        <td>
+                            @Html.TextBox("SDT", kh.soDienThoai, new { @class = "form-control", @type = "text", @style = "width:400px; height: 30px; font-size:12px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted" style="font-size:11px; font-weight:100">Email</td>
+                        <td>
+                            @Html.TextBox("Email", kh.email, new { @class = "form-control", @type = "text", @style = "width:400px; height: 30px; font-size:12px;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted" style="font-size:11px; font-weight:100">Địa chỉ</td>
+                        <td>
+                            @Html.TextBox("DiaChi", kh.diaChi, new { @class = "form-control", @type = "text", @style = "width:400px; height: 30px; font-size:12px;" })
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="form-check" style="margin-left:110px;margin-top:-20px">
+                    <label class="form-check-label" style="">
+                        <input type="checkbox" name="checkBox" class="form-check-input" data-target="#updatePass" data-toggle="collapse" value="">Thay đổi mật khẩu
+                    </label>
+                </div>
+                <div id="updatePass" class="collapse">
+                    <table class="table">
+                        <tr class="non-border">
+                            <td class="text-muted" style="font-size:11px; font-weight:100;width:100px">Mật khẩu</td>
+                            <td>
+                                @Html.TextBox("MatKhau", kh.matKhau, new { @class = "form-control", @type = "Password", @style = "width:400px; height: 30px; font-size:12px;" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted" style="font-size:11px; font-weight:100">Mật khẩu mới</td>
+                            <td>
+                                @Html.TextBox("ReMatKhau", "", new { @class = "form-control", @type = "Password", @style = "width:400px; height: 30px; font-size:12px;" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted" style="font-size:11px; font-weight:100">Nhập lại</td>
+                            <td>
+                                @Html.TextBox("NhapLaiMK", "", new { @class = "form-control", @type = "Password", @style = "width:400px; height: 30px; font-size:12px;" })
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="margin-left:130px; margin-top:-15px; margin-bottom:20px">
+                <button class="btn btn-warning" style="width:150px;height:30px;padding:0px;font-size:12px" type="submit">Cập nhật</button>
+            </div>
+        </div>
+        }
+    }
+}

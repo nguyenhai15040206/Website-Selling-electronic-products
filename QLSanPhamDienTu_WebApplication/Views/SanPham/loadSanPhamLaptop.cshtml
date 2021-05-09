@@ -1,0 +1,105 @@
+﻿    @{
+    ViewBag.Title = "loadSanPhamLaptop";
+    Layout = "~/Views/Shared/QLSPLayout.cshtml";
+}
+@using QLSanPhamDienTu_WebApplication.Models;
+@model List<SanPham>
+
+<style type="text/css">
+    #hover:hover {
+        /*transform: scale(1.1);*/
+        transform: scale(1.1);
+        transition: all 0.2s;
+    }
+    #text {
+        position:absolute;
+        top:195px;
+    }
+
+    #img-hover img:hover {
+        transform: scale(1.1);
+        transition: all 0.4s;
+    }
+</style>
+<body class="bg-light">
+    <div class="card mt-2">
+        <div class="card-header" style="font-size:20px; font-weight:bold">Danh sách Laptop<span style="font-size:13px; font-weight:500">  (@ViewBag.TongSPLaptop sản phẩm)</span></div>
+        <div class="card">
+            <div class="card-body">
+                <div id="img-hover" class="d-flex">
+                    <div>
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340494668267616_Macbook-Apple@2x.jpg" />
+                    </div>
+                    <div style="margin-left:25px; ">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340494666861275_Asus.jpg" />
+                    </div>
+                    <div style="margin-left:25px;">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340494666861275_Dell@2x.jpg" />
+                    </div>
+                    <div style="margin-left:25px;">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340494666704995_Acer@2x.jpg" />
+                    </div>
+                    <div style="margin-left:25px; margin-top:7px ">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/7/4/637294195523924258_HP.jpg" />
+                    </div>
+                    <div style="margin-left:25px;">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340493755614653_MSI@2x.jpg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row ml-0 bg-light card-body" style=" border-radius:3px">
+        @foreach(var item in Model)
+        {
+            <div id="hover" class="col-3 card" style="border:none; border-bottom:1px solid gray">
+                @if(item.giamGia !=0)
+                {
+                <div id="text" style="background-color:red; border-radius:15px; width:110px">
+                        <center><span style="font-size:11px;color:white; text-align:center">Giảm @string.Format("{0:0,0}",item.giamGia)đ</span></center>
+                    </div>
+                }
+                <img class="card-img-top" src="../Images/SanPhams/@item.hinhMinhHoa" style="height:220px; width:100%" />
+                <div class="card" style="border:none; margin-top:5px">
+                    <h5 class="card-text text-dark" style="font-size:15px; font-weight:bold">@item.tenSanPham</h5>
+                    <div class="d-flex" style="margin-top:-5px;">
+                        <div style="width:65%">
+                            <span class="text-danger" style="">@string.Format("{0:0,0}", (item.donGia-item.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                        </div>
+                        <div style="width:35%">
+                            <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                        </div>
+                    </div>
+                    @{
+                        string[] mota = item.moTa.Split('|');
+                        <div class="d-flex" style="margin-top:2px">
+                            <div style="width:33%">
+                                @if(mota[0].ToString().Trim().Length == 5)
+                                {
+                                    <p class="text-dark" style="font-size:13px;"><i class="fas fa-laptop-code" style="width:19px"></i> <span style="margin-left:-8px">@mota[0].ToString().Trim()</span></p>
+                                }else
+                                {
+                                    <p class="text-dark" style="font-size:13px"><i class="fas fa-laptop-code" style="width:19px"></i> <span style="margin-left:-8px">@mota[0].ToString().Substring(0,5).Trim()</span></p>
+                                }
+                            </div>
+                            <div style="width:33%">
+                                
+                                <p class="text-dark" style="font-size:13px"><i class="fas fa-server"></i>  @mota[1].ToString().Trim().Substring(5,8)</p>
+                            </div>
+                            <div style="width:34%">
+                                <p class="text-dark" style="font-size:13px"><i class="fa fa-microchip"></i>  @mota[2].ToString().Trim().Substring(0,4)</p>
+                            </div>
+                        </div>
+                        <p class="text-dark" style="font-size:14px;margin-top:-15px"><i class="fa fa-hdd"></i>  @mota[3].ToString().Trim()</p>
+                        <p class="text-dark" style="font-size:14px;margin-top:-15px"><i class="fas fa-star-of-david"></i>  @mota[4].ToString().Trim()</p>
+                        <a href="@Url.Action("chiTietSanPhamLaptop", "SanPham", new {@maSP = item.maSanPham })" style="margin-top:-10px">Xem chi tiết...</a>
+                        <br />
+                    }
+                </div>
+            </div>
+        }
+</div>
+        </div>
+    </div>
+</body>
+

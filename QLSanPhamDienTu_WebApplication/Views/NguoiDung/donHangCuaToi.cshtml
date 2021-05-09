@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "donHangCuaToi";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+@using QLSanPhamDienTu_WebApplication.Models;
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+}
+@model List<DonMua>
+
+<div class="card">
+    <div class="card-header">
+        <span style="">Đơn hàng của tôi</span>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model)
+        {
+        <div class="media" style="">
+            <img src="~/Images/SanPhams/@item.hinhMinhHoa" class="mr-3" style="width:50px;" />
+            <div class="=media-body" style="width:100%; margin-top:-5px;">
+                <span style="font-size:12px">@item.tenSanPham</span>
+                <div class="d-flex">
+                    <div style="width:70%">
+                        <p style="font-size:11px"><span style="font-size:9px">X</span> @item.soLuong</p>
+                    </div>
+                    <div style="width:30%">
+                        @if (item.giamGia > 0)
+                        {
+                            <p style="font-size:9px; color:darkgray"><u style="font-size:7px; margin-top:-3px">đ </u><del>@string.Format("{0:0,0}", item.giamGia)</del></p>
+                        }
+                        <p style="font-size:9px; color:red; margin-top:-15px"><u style="font-size:7px; margin-top:-3px">đ </u>@string.Format("{0:0,0}", item.donGia - item.giamGia)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="margin-top:-10px" />
+        }
+    </div>
+</div>

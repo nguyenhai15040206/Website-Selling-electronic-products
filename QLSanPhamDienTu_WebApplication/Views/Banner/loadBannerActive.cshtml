@@ -1,0 +1,10 @@
+﻿@using QLSanPhamDienTu_WebApplication.Models;
+@model List<Banner>
+
+@{ foreach (var item in Model)
+    {
+        <div class="carousel-item active">
+            <img src="~/Images/Carausel/@item.fileBanner" alt="First slide">
+        </div>
+    }
+}

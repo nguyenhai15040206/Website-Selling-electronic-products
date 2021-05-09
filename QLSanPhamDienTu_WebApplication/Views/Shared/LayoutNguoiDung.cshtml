@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="~/Contains/QLSP.css" />
+
+    <style>
+        .dropbtn {
+          color: white;
+          border: none;
+          cursor: pointer;
+        }
+        
+        /* Dùng trong <div> để định vị nội dung thả xuống */
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #e9d8f4;
+          width: 180px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+          border-radius:10px;
+        }
+        
+        .dropdown-content a {
+          color: black;
+          padding: 8px 9px;
+          text-decoration: none;
+          display: block;
+          font-size:13px;
+        }
+        
+        .dropdown-content a:hover {
+          color:black;
+        }
+        
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+        
+        .dropdown:hover .dropbtn {
+          
+        }
+
+
+        /**/
+        .img-thumbnail:hover {
+        border:1px solid red;
+
+        }
+    </style>
+    @using QLSanPhamDienTu_WebApplication.Models;
+</head>
+<body>
+    @{
+        KhachHang kh = (KhachHang)Session["TaiKhoan"];
+    }
+    <div class="">
+        @Html.Action("HeaderPartialView","Home")
+        <div class="d-flex" style="background-color: rgb(239, 239, 239);">
+            <div style="width:8%">
+            </div>
+            <div style="width:84%">
+                <div class="d-flex">
+                    <div style="width: 30%">
+                        <div class="media p-1">
+                            <img src="https://salt.tikicdn.com/desktop/img/avatar.png" class="mr-1 mt-3 rounded-circle" style="width: 50px" />
+                            <div class="media-body mt-3">
+                                <span style="font-size: 10px" class="text-muted">Tài khoản của</span>
+                                <p style="font-size: 12px; font-weight: 500" class="text-muted">@kh.tenKhachHang</p>
+                            </div>
+                        </div>
+                        <div class="list-group" style="margin-top: 4px;">
+                            <a href="@Url.Action("donHangCuaToi","NguoiDung")" class="list-group-item list-group-item-action" style="background-color: rgb(239, 239, 239);font-size:12px; border-left: none; border-right: none;">Thông tin tài khoản</a>
+                            <a href="#" class="list-group-item list-group-item-action" style="background-color: rgb(239, 239, 239); border-left: none; border-right: none; font-size:12px">Quản lý đơn hàng</a>
+                        </div>
+                    </div>
+                    <div style="width:70%">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <div style="width:8%">
+            </div>
+        </div>
+        <br />
+        <div class="footer d-flex" style="">
+            <div style="width:8%;"></div>
+            <div id="footer_Span" class="d-flex" style="width:84%;">
+                <div style="width:30%">
+                    <span style="font-size:15px; font-weight:500">GIỚI THIỆU - HỔ TRỢ KHÁCH HÀNG</span><br />
+                    <a id="tieude" href="#">Hotline chăm sóc khách hàng: 1900-6035<br /><span style="font-size:10px;color:black;margin-bottom: 11px;display:block;font-weight:normal">(1000đ/phút , 8-22h kể cả T7, CN)</span></a>
+                    <a href="#">Giới thiệu về công ty</a>
+                    <a href="#">Hướng dẫn đặt hàng</a>
+                    <a href="#">Chính sách bảo mật</a>
+                    <a href="#">Kiểm tra hóa đơn điện tử</a>
+                    <a href="#">Hổ trợ khách hàng: hotro@gmail.com</a>
+                </div>
+                <div style="width:26%">
+                    <span style="font-size:15px; font-weight:500">PHƯƠNG THỨC THANH TOÁN</span><br />
+                    <div>
+                        <div class="d-flex">
+                            <div>
+                                <img style="width: 70px;" class="icon" src="https://frontend.tikicdn.com/_desktop-next/static/img/footer/visa.svg" /></div>
+                            <div>
+                                <img style="width: 70px;" class="icon ml-2" src="https://frontend.tikicdn.com/_desktop-next/static/img/footer/mastercard.svg" /></div>
+                            <div>
+                                <img style="width: 70px;" class="icon ml-2" src="https://frontend.tikicdn.com/_desktop-next/static/img/footer/jcb.svg" /></div>
+                        </div>
+                        <div class="d-flex mt-2">
+                            <div>
+                                <img style="width: 70px;" class="icon" src="https://frontend.tikicdn.com/_desktop-next/static/img/footer/cash.svg" /></div>
+                            <div>
+                                <img style="width: 70px;" class="icon ml-2" src="https://frontend.tikicdn.com/_desktop-next/static/img/footer/internet-banking.svg" /></div>
+                            <div>
+                                <img style="width: 70px;" class="icon ml-2" src="https://frontend.tikicdn.com/_desktop-next/static/img/footer/installment.svg" /></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:20%">
+                    <span style="font-size:15px; font-weight:500">KẾT NỐI VỚI CHÚNG TÔI</span><br />
+                    <div class="d-flex">
+                            <div>
+                                <img style="width: 40px; margin-left:-10px" class="icon" src="https://frontend.tikicdn.com/_desktop-next/static/img/footer/fb.svg" /></div>
+                        <div>
+                                <img style="width: 70px; height:37px; margin-left:-20px" class="icon" src="~/Images/zalo.png" /></div>
+                        </div>
+                </div>
+                <div style="width:24%"> 
+                </div>
+            </div>
+            <div style="width:8%;"></div>
+        </div>
+        <div style="text-align:center;background-color:#f2f2f2;">  
+            <span style="font-size:10px;">
+                © 2007 - 2020 Công Ty Cổ Phần Bán Lẻ Kỹ Thuật Số FPT / Địa chỉ: 261 - 263 Khánh Hội, P5, Q4, TP. Hồ Chí Minh / GPĐKKD số 0311609355 do Sở KHĐT TP.HCM cấp ngày 08/03/2012. GP số 47/GP-TTĐT do sở TTTT TP HCM cấp ngày 02/07/2018.<br />
+                <span style="display:block; margin-top:-3px">Điện thoại: (035)7866848. Email: nguyenhai15040206@gmail.com. Chịu trách nhiệm nội dung: Nguyễn Tấn Hải.</span>
+            </span>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    @RenderSection("jsFooter", required: false)
+</body>
+</html>

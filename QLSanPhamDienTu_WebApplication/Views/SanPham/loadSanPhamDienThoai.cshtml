@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "loadSanPhamDienThoai";
+    Layout = "~/Views/Shared/QLSPLayout.cshtml";
+}
+@using QLSanPhamDienTu_WebApplication.Models;
+@model List<SanPham>
+
+
+
+<style type="text/css">
+    #hover:hover {
+        /*transform: scale(1.1);*/
+        transform: scale(1.1);
+        transition: all 0.2s;
+    }
+
+    #text {
+        position: absolute;
+        top: 195px;
+    }
+
+    #img-hover img:hover {
+        transform: scale(1.1);
+        transition: all 0.4s;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<body class="bg-light">
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <div class="card mt-2">
+        <div class="card-header" style="font-size:20px; font-weight:bold">Danh sách điện thoại<span style="font-size:13px; font-weight:500">  (@ViewBag.TongSPDT sản phẩm)</span></div>
+        <div class="card">
+            <div class="card-body">
+                <div id="img-hover" class="d-flex">
+                    <div>
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340490193124614_iPhone-Apple@2x.jpg" />
+                    </div>
+                    <div style="margin-left:25px; margin-top:2px">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340490904217021_Samsung@2x.jpg" />
+                    </div>
+                    <div style="margin-left:25px;">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340491898745716_Vivo@2x.jpg" />
+                    </div>
+                    <div style="margin-left:25px;">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340491898745716_Realme@2x.jpg" />
+                    </div>
+                    <div style="margin-left:25px; margin-top:3px">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340491898901930_Xiaomi@2x.jpg" />
+                    </div>
+                    <div style="margin-left:25px; margin-top:4px">
+                        <img src="https://images.fpt.shop/unsafe/fit-in/108x40/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2020/8/26/637340491304997311_Oppo@2x.jpg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row ml-0 bg-light card-body" style=" border-radius:3px">
+                @{
+                    foreach (var item in Model)
+                    {
+                        <div id="hover" class="col-3 card" style="border:none; border-bottom:1px solid gray">
+                            @if (item.giamGia != 0)
+                            {
+                                <div id="text" style="background-color:red; border-radius:15px; width:110px">
+                                    <center><span style="font-size:11px;color:white; text-align:center">Giảm @string.Format("{0:0,0}", item.giamGia)đ</span></center>
+                                </div>
+                            }
+                            <img class="card-img-top" src="../Images/SanPhams/@item.hinhMinhHoa" style="height:220px; width:100%" />
+                            <div class="card" style="border:none; margin-top:5px">
+                                <h5 class="card-text text-dark" style="font-size:15px; font-weight:bold">@item.tenSanPham</h5>
+                                <div class="d-flex" style="margin-top:-5px;">
+                                    <div style="width:65%">
+                                        <span class="text-danger" style="">@string.Format("{0:0,0}", (item.donGia - item.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                                    </div>
+                                    <div style="width:35%">
+                                        <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                                    </div>
+                                </div>
+                                @{
+                                    string[] mota = item.moTa.Split('|');
+                                    <div class="d-flex" style="margin-top:2px">
+                                        <div style="width:42%">
+                                            <p class="text-dark" data-toggle="tooltip" data-placement="top" title="CPU" style="font-size:13px"><i class="fas fa-th"></i>  @mota[3].ToString().Trim().Substring(0, 7) ...</p>
+                                        </div>
+                                        <div style="width:28%">
+                                            @if (mota[0].ToString().Trim().Length == 4)
+                                            {
+                                                <p class="text-dark" data-toggle="tooltip" data-placement="top" title="Màn hình" style="font-size:13px;"><i class="fas fa-mobile-alt fas-large" style="width:19px"></i> <span style="margin-left:-8px">@mota[0].ToString().Trim()</span></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-dark" data-toggle="tooltip" data-placement="top" title="Màn hình" style="font-size:13px"><i class="fas fa-mobile-alt fas-large" style="width:19px"></i> <span style="margin-left:-8px">@mota[0].ToString().Substring(0, 4).Trim()</span></p>
+                                            }
+                                        </div>
+                                        <div style="width:30%">
+                                            <p class="text-dark" data-toggle="tooltip" data-placement="top" title="RAM" style="font-size:13px"><i class="fa fa-microchip"></i>  @mota[4].ToString().Trim()</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-dark" data-toggle="tooltip" data-placement="top" title="Bộ nhớ trong" style="font-size:14px;margin-top:-15px"><i class="fa fa-hdd"></i>  @mota[5].ToString().Trim()</p>
+                                    <a href="@Url.Action("chiTietSanPhamDienThoai", "SanPham", new {@maSP = item.maSanPham })" style="margin-top:-10px">Xem chi tiết...</a>
+                                    <br />
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>

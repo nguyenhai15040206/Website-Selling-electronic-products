@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "chiTietSanPhamLaptop";
+    Layout = "~/Views/Shared/QLSPLayout.cshtml";
+}
+@model QLSanPhamDienTu_WebApplication.Models.SanPham
+<br />
+<body class="bg-light">
+<div class="container mt-2">
+    <h5 style="font-weight:bold">@Model.tenSanPham</h5>
+    <hr />
+    <div class="d-flex">
+        <div class="card" style="width:40%;">
+            <center><img class="card-image-top" src="../Images/SanPhams/@Model.hinhMinhHoa" style="height:330px; width:75%;" /></center>
+            <div class="card bg-light" style="border:none; padding:5px">
+                @{
+                    if(Model.moTa !=null)
+                    {
+                    string []mota = @Model.moTa.Split('|');
+                    string []motaChiTiet = @Model.moTaChiTiet.Split('|');
+                    <p class="text-dark ml-1" style="font-size:14px"><i class="fas fa-laptop-code" style="color:#BBBBBB; font-size:20px"></i> @mota[0].ToString()</p>
+                    <p class="text-dark ml-1" style="font-size:14px; margin-top:-5px"><i class="fas fa-server" style="color:#BBBBBB"></i>  @mota[1].ToString()</p>
+                    <p class="text-dark ml-1" style="font-size:14px; margin-top:-5px"><i class="fa fa-microchip" style="color:#BBBBBB"></i>  @mota[2].ToString()</p>
+                    <p class="text-dark ml-1" style="font-size:14px; margin-top:-5px"><i class="fa fa-hdd" style="color:#BBBBBB"></i>  @mota[3].ToString()</p>
+                    <p class="text-dark ml-1" style="font-size:14px; margin-top:-5px"><i class="fas fa-star-of-david" style="color:#BBBBBB"></i>  @mota[4].ToString()</p>
+                        <a href="#" style="margin-top:-10px" data-toggle="modal" data-target=".bs-example-modal-lg">Xem chi tiết thông số kỹ thuật</a>
+                        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="my">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Thông số kỹ thuật</h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table class="table table-striped table-bordered" style="font-size: 13px">
+                                                    <tr>
+                                                        <td style="width: 35%">CPU</td>
+                                                        <td>@mota[1].ToString()</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>RAM</td>
+                                                        <td>@mota[2].ToString()</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Màn hình</td>
+                                                        <td>@mota[0].ToString()</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Đồ họa</td>
+                                                        <td>@mota[4].ToString()</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Hệ điều hành</td>
+                                                        <td>@motaChiTiet[0].ToString()</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Trọng lượng</td>
+                                                        <td>@motaChiTiet[1]</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Kích thước</td>
+                                                        <td>@motaChiTiet[2].ToString()</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Xuất xứ</td>
+                                                        <td>@Model.xuatXu</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Năm ra mắt</td>
+                                                        <td>@Model.ngayCapNhat</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }else{
+                        <span>Chưa cập nhật</span>
+                    }
+                }
+            </div>
+        </div>
+        <div class="ml-4" style="width:60%">
+            @if(@Model.giamGia >0)
+                {
+            <div class="d-flex" style="">
+                        <div style="width:25%">
+                            <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@Model.donGia-@Model.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                        </div>
+                        <div style="width:75%">
+                            <del><span class="text-dark " style="font-size:16px;">@string.Format("{0:0,0}", @Model.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                        </div>
+                </div>
+            }
+            else
+            {
+                <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@Model.donGia-@Model.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+            }
+            <div class="card">
+                <div class="card-header">
+                    <span class="text-dark">Nhận ngay khuyến mãi đặt biệt</span>
+                </div>
+                <div class="card-body">
+                    @{
+                        string[] khuyeMai = Model.khuyenMai.Split('|');
+                        for (int i = 0; i < khuyeMai.Length; i++)
+                        {
+                            <p><i class="fas fa-check-circle" style="color:green"></i> @khuyeMai[i].ToString()</p>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="card mt-2">
+                <div class="card-header">
+                    Bảng màu
+                </div>
+                <div class="card-body d-flex">
+                    @{
+                        if(Model.dsHinh != null)
+                        {
+                            string[] dsHinhs = Model.dsHinh.Trim().Split(',');
+                            foreach (var item in dsHinhs)
+                            {
+                                <img id="zum" style="width:100px; height:90px" class="img-thumbnail ml-2" src="../Images/SanPham/@item.ToString().Trim()" />
+                            }
+                        }
+                        else
+                        {
+                            <span>Chưa cập nhật</span>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="mt-3 d-flex">
+                <div style="width:50%">
+                    <a href="@Url.Action("themSPVaoGioHang", "GioHang", new { @maSP=Model.maSanPham, @strUrl=Request.Url.ToString()})"><button class="btn btn-primary" style="height:45px;margin-left:25px; width:90%; font-weight:bold" type="submit">MUA NGAY</button></a>
+                </div>
+                <div style="width:50%">
+                    <a href="@Url.Action("loadSanPhamLaptop","SanPham")"><button class="btn btn-primary" style="height:45px; width:90%; font-weight:bold; float:right; margin-right:25px" type="submit">MUA TIẾP</button></a>
+                </div>
+            </div>
+            <p class="mt-2 card-text">Gọi: <a class="text-danger" style="text-decoration:none">1800-6601</a> để được tư vấn mua hàng (Miễn phí)</p>
+        </div>
+    </div>
+</div>
+    </body>

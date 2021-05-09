@@ -1,0 +1,65 @@
+﻿@import url("http://fonts.googleapis.com/css?family=Roboto");
+    .nav a {
+        text-decoration: none;
+    }
+
+    .nav li {
+        list-style: none;
+    }
+
+
+.nav {
+    cursor: default;
+    display: inline-block;
+    position: relative;
+    z-index: 500;
+}
+
+    /* menu list */
+    .nav > li {
+        display: block;
+        float: left;
+    }
+
+        /* menu links */
+        .nav > li > a {
+            display: block;
+            color: #fcfcfc;
+            position: relative;
+            text-shadow: 0 0 1px rgba(0,0,0,.35);
+            -webkit-transition: all .3s ease;
+            transition: all .3s ease;
+            z-index: 510;
+        }
+
+        .nav > li:first-child > a {
+            border-left: none;
+            border-radius: 3px 0 0 3px;
+        }
+
+
+
+        /* menu dropdown */
+        .nav > li > div {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 0 0 3px 3px;
+            position: absolute;
+            display: block;
+            left: 0;
+            opacity: 0;
+            overflow: hidden;
+            top: 50px;
+            -webkit-transition: all .3s ease .15s;
+            transition: all .3s ease .15s;
+            visibility: hidden;
+            width: 100%;
+        }
+
+        .nav > li:hover > div {
+            opacity: 1;
+            overflow: visible;
+            visibility: visible;
+        }
+
+    /* menu content styles */

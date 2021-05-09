@@ -1,0 +1,75 @@
+﻿
+@using QLSanPhamDienTu_WebApplication.Models;
+@model List<GioHang>
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+}
+<table class="table" style="text-align:center;">
+        @using (Html.BeginForm("DatHang","Giohang"))
+        {
+            @Html.ValidationSummary(true)
+            <tr>
+                <td>Tên Khách Hàng :</td>
+                <td style="font-weight:bold;">@kh.tenKhachHang</td>
+            </tr>
+            <tr>
+                <td>Địa Chỉ :</td>
+                <td style="font-weight:bold;">@kh.diaChi</td>
+            </tr>
+            <tr>
+                <td>Điện Thoại :</td>
+                <td style="font-weight:bold;">@kh.soDienThoai</td>
+            </tr>
+            <tr>
+                <td>Ngày Đặt :</td>
+                <td style="font-weight:bold;">@DateTime.Now.ToShortDateString()</td>
+            </tr>
+            <tr>
+                <td>Ngày Giao :</td>
+                <td ><input type="date" name="NgayGiao"/></td>
+            </tr>
+            
+            <tr>
+                <td colspan="2"><input class="btn btn-primary" type="submit" value="Đồng Ý Đặt Hàng"/></td>
+            </tr>
+        }
+    </table>
+@*@using (@Html.BeginForm("datHang","GioHang"))
+{
+    @Html.ValidationSummary(true)
+    {
+    <form>
+        <div class="d-flex">
+            <div style="width: 60%">
+                <input type="text" class="form-control" id="hoTen" placeholder="Nhập họ và tên*" value="@kh.tenKhachHang" name="txtHoTen">
+            </div>
+            <div style="width: 60%; margin-left: 10px">
+                <input type="text" class="form-control" placeholder="Nhập số điện thoại" value="@kh.soDienThoai" name="txtSDT">
+            </div>
+        </div>
+        <div class="input-group" style="margin-top: 10px">
+            <input type="text" class="form-control" id="email" placeholder="Nhập địa chỉ email" value="@kh.email" name="txtEmail">
+            <div class="input-group-append">
+                <span class="input-group-text">a@gmail.com</span>
+            </div>
+        </div>
+        <div class="input-group" style="margin-top: 10px">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Ngày đặt: </span>
+            </div>
+            <input type="text" class="form-control" id="ngayDat" placeholder="Nhập địa chỉ email" value="@DateTime.Now.ToShortDateString()" name="txtEmail">
+        </div>
+        <div class="input-group" style="margin-top: 10px">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Địa chỉ: </span>
+            </div>
+            <input type="text" class="form-control" id="diaChi" placeholder="Nhập địa chỉ email" value="@kh.diaChi" name="txtEmail">
+            
+        </div>
+    </form>
+    <div class="card-footer">
+        <center><input class="btn btn-danger" style="width:250px; height:50px" type="submit" value="HOÀN TẤT ĐẶT HÀNG" /></center>
+    </div>
+    <hr />
+    }
+}*@
