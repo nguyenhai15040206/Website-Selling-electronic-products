@@ -1,0 +1,9 @@
+﻿@using QLSanPhamDienTu_WebApplication.Models;
+@model List<DanhMuc>
+
+@foreach (var item in Model)
+{
+    <div>
+        <img src="../Images/Logo/@item.logoTungDanhMucSP" style="margin-right:10px" />
+    </div>
+}

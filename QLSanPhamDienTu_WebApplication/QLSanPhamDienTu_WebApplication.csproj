@@ -195,6 +195,18 @@
     <Content Include="Images\Carausel\Hinh3.jpg" />
     <Content Include="Images\contact-background-images-9.jpg" />
     <Content Include="Images\logo.png" />
+    <Content Include="Images\Logo\Acer%402x.jpg" />
+    <Content Include="Images\Logo\Asus.jpg" />
+    <Content Include="Images\Logo\Dell%402x.jpg" />
+    <Content Include="Images\Logo\HP.jpg" />
+    <Content Include="Images\Logo\iPhone-Apple%402x.jpg" />
+    <Content Include="Images\Logo\Macbook-Apple.jpg" />
+    <Content Include="Images\Logo\MSI%402x.jpg" />
+    <Content Include="Images\Logo\Oppo%402x.jpg" />
+    <Content Include="Images\Logo\Realme%402x.jpg" />
+    <Content Include="Images\Logo\Samsung%402x.jpg" />
+    <Content Include="Images\Logo\Vivo%402x.jpg" />
+    <Content Include="Images\Logo\Xiaomi%402x.jpg" />
     <Content Include="Images\OPPOA53.png" />
     <Content Include="Images\SanPhams\IPHONE11PRO_TRANG.png" />
     <Content Include="Images\SanPhams\MBA-13.jpg" />
@@ -224,7 +236,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\DanhMucSanPham\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -305,6 +316,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Banner\loadBanner.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DanhMucSanPham\LogoDanhMucDienThoai.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DanhMucSanPham\LogoDanhMucLaptop.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

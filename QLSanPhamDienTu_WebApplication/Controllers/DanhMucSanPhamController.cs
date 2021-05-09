@@ -18,17 +18,20 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             return View();
         }
 
-        public ActionResult loadDanhMuc()
-        {
-            return View();
-        }
 
-
-        public ActionResult DanhMucDienThoai()
+        public ActionResult LogoDanhMucDienThoai()
         {
             var dienThoai = db.DanhMucs.Where(m => m.ghiChu == "DienThoai").ToList();
             return View(dienThoai);
         }
+
+        public ActionResult LogoDanhMucLaptop()
+        {
+            var laptop = db.DanhMucs.Where(m => m.ghiChu == "Laptop").ToList();
+            return View(laptop);
+        }
+
+
 
     }
 }
