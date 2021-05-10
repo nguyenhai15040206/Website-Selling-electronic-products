@@ -37,13 +37,13 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             {
                 ViewData["Loi2"] = "Số điện thoại không được bỏ trống";
             }
-            if (string.IsNullOrEmpty(tenDangNhap))
+            if (string.IsNullOrEmpty(tenDangNhap) || (tenDangNhap.Trim().Length <5 && tenDangNhap.Trim().Length >30))
             {
-                ViewData["Loi3"] = "Nhập tên đăng nhập";
+                ViewData["Loi3"] = "Nhập tên đăng nhập từ 5 đến 30 kí tự";
             }
-            if(string.IsNullOrEmpty(matKhau))
+            if(string.IsNullOrEmpty(matKhau) ||  (matKhau.Trim().Length < 5 && matKhau.Trim().Length > 30))
             {
-                ViewData["Loi4"] = "Nhập mật khẩu";
+                ViewData["Loi4"] = "Nhập mật khẩu từ 5 đến 30 kí tự";
             }
             if (string.IsNullOrEmpty(reMatKHau))
             {
@@ -134,46 +134,50 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
 
         // thông tin tài khoản, cập nhật thông tin
         [HttpGet]
-        public ActionResult thongTinTaiKhoan()
+        public ActionResult thongTinTaiKhoan(int maKhachHang)
         {
-            return View();
+            var kh = db.KhachHangs.Where(m => m.maKhachHang == maKhachHang).FirstOrDefault();
+            return View(kh);
         }
+
         [HttpPost]
-        public ActionResult thongTinTaiKhoan(KhachHang kh, FormCollection f)
+        public ActionResult thongTinTaiKhoan(int maKhachHang,string tenKhachHang, string soDienThoai, string email, string diaChi, string reMatKhau, string nhapLai)
         {
+            KhachHang kh = db.KhachHangs.Single(m => m.maKhachHang == maKhachHang);
             if (ModelState.IsValid)
             {
-                var tenKhachHang = f["HoTen"].ToString();
-                var soDienThoai = f["SDT"].ToString();
-                var email = f["Email"].ToString();
-                var diaChi = f["DiaChi"].ToString();
-                var matKhau = f["ReMatKhau"].ToString();
-                var nhapLai = f["NhapLaiMK"].ToString();
                 if (string.IsNullOrEmpty(tenKhachHang) || string.IsNullOrEmpty(soDienThoai) || string.IsNullOrEmpty(email)
-                    || string.IsNullOrEmpty(diaChi) || string.IsNullOrEmpty(matKhau))
+                    || string.IsNullOrEmpty(diaChi))
                 {
                     ViewData["Loi1"] = "Các thông tin không được để trống!";
                 }
-                if (!string.IsNullOrEmpty(tenKhachHang) && !string.IsNullOrEmpty(soDienThoai) && !string.IsNullOrEmpty(email)
-                    && !string.IsNullOrEmpty(diaChi) && !string.IsNullOrEmpty(matKhau))
+                if(string.IsNullOrEmpty(reMatKhau))
                 {
 
+                }    
+                if (!string.IsNullOrEmpty(tenKhachHang) && !string.IsNullOrEmpty(soDienThoai) && !string.IsNullOrEmpty(email)
+                    && !string.IsNullOrEmpty(diaChi))
+                {
+                    
                     if (kiemTraDL.isPhoneNumber(soDienThoai))
                     {
                         kh.diaChi = diaChi;
                         kh.tenKhachHang = tenKhachHang;
                         kh.soDienThoai = soDienThoai;
                         kh.email = email;
-                        if (matKhau.Trim() == nhapLai.Trim())
+                        if(!string.IsNullOrEmpty(reMatKhau))
                         {
-                            kh.matKhau = matKhau;
-                            db.SubmitChanges();
+                            if (reMatKhau.Trim() == nhapLai.Trim())
+                            {
+                                kh.matKhau = reMatKhau;
+                            }
+                            else
+                            {
+                                ViewData["Loi3"] = "Mật khẩu không khớp!";
+                            }
                         }
-                        else
-                        {
-                            ViewData["Loi3"] = "Mật khẩu không khớp!";
-                        }
-
+                        db.SubmitChanges();
+                        ViewData["thongBao"] = "Cập nhật thành công!";
                     }
                     else
                     {

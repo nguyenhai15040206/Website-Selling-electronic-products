@@ -5,7 +5,7 @@
     KhachHang kh = (KhachHang)Session["TaiKhoan"];
 }
 <table class="table" style="text-align:center;">
-        @using (Html.BeginForm("DatHang","Giohang"))
+        @using (Html.BeginForm("DatHang","Giohang",new { @maKhachHang = kh.maKhachHang} , FormMethod.Post))
         {
             @Html.ValidationSummary(true)
             <tr>
@@ -14,7 +14,7 @@
             </tr>
             <tr>
                 <td>Địa Chỉ :</td>
-                <td style="font-weight:bold;">@kh.diaChi</td>
+                <td style="font-weight:bold;"><input class="form-control" value="=@kh.diaChi" name="diaChi" /></td>
             </tr>
             <tr>
                 <td>Điện Thoại :</td>
@@ -34,42 +34,3 @@
             </tr>
         }
     </table>
-@*@using (@Html.BeginForm("datHang","GioHang"))
-{
-    @Html.ValidationSummary(true)
-    {
-    <form>
-        <div class="d-flex">
-            <div style="width: 60%">
-                <input type="text" class="form-control" id="hoTen" placeholder="Nhập họ và tên*" value="@kh.tenKhachHang" name="txtHoTen">
-            </div>
-            <div style="width: 60%; margin-left: 10px">
-                <input type="text" class="form-control" placeholder="Nhập số điện thoại" value="@kh.soDienThoai" name="txtSDT">
-            </div>
-        </div>
-        <div class="input-group" style="margin-top: 10px">
-            <input type="text" class="form-control" id="email" placeholder="Nhập địa chỉ email" value="@kh.email" name="txtEmail">
-            <div class="input-group-append">
-                <span class="input-group-text">a@gmail.com</span>
-            </div>
-        </div>
-        <div class="input-group" style="margin-top: 10px">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Ngày đặt: </span>
-            </div>
-            <input type="text" class="form-control" id="ngayDat" placeholder="Nhập địa chỉ email" value="@DateTime.Now.ToShortDateString()" name="txtEmail">
-        </div>
-        <div class="input-group" style="margin-top: 10px">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Địa chỉ: </span>
-            </div>
-            <input type="text" class="form-control" id="diaChi" placeholder="Nhập địa chỉ email" value="@kh.diaChi" name="txtEmail">
-            
-        </div>
-    </form>
-    <div class="card-footer">
-        <center><input class="btn btn-danger" style="width:250px; height:50px" type="submit" value="HOÀN TẤT ĐẶT HÀNG" /></center>
-    </div>
-    <hr />
-    }
-}*@

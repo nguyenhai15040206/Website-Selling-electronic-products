@@ -198,7 +198,7 @@
                         <div class="dropdown-content" style="padding: -10px">
                             <div class="list-group">
                                 <a href="@Url.Action("donHangCuaToi","NguoiDung")" class="list-group-item list-group-item-action">Đơn hàng của tôi</a>
-                                <a href="@Url.Action("thongTinTaiKhoan","NguoiDung")" class="list-group-item list-group-item-action">Tài khoản của tôi</a>
+                                <a href="@Url.Action("thongTinTaiKhoan","NguoiDung", new { @maKhachHang = kh.maKhachHang})" class="list-group-item list-group-item-action">Tài khoản của tôi</a>
                                 <a href="@Url.Action("dangXuat","NguoiDung")" class="list-group-item list-group-item-action">Thoát tài khoản</a>
                             </div>
                         </div>

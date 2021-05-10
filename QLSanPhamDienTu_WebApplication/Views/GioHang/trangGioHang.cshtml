@@ -20,6 +20,9 @@
 
 @using QLSanPhamDienTu_WebApplication.Models;
 @model List<GioHang>
+    @{ 
+        KhachHang kh = (KhachHang)Session["TaiKhoan"];
+    }
 <br />
 <div class="card bordered-dark">
     <div class="card-header d-flex">
@@ -40,7 +43,7 @@
                             <div class="modal-body">
                                 <div class="card">
                                     <div class="card-body">
-                                        @Html.Action("datHang", "GioHang")
+                                        @Html.Action("datHang", "GioHang", new { @maKhachHang = kh.maKhachHang})
                                         @*<form>
                                             <div class="form-check-inline">
                                                 <label class="form-check-label">

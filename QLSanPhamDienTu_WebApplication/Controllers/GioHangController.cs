@@ -106,6 +106,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         }
 
         // cập nhật số lượng
+        
         public ActionResult capNhatGioHang(int maSP, FormCollection f)
         {
             List<GioHang> listGioHang = layGioHang();
@@ -151,7 +152,6 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             {
                 return RedirectToAction("loadSanPhamDienThoai", "SanPham");
             }
-
             // lấy giở hang
             List<GioHang> listGIoHang = layGioHang();
             ViewBag.tinhTongSL = tongSoLuong();
@@ -159,36 +159,47 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             return View();
         }
 
+        
+
 
         [HttpPost]
-        public ActionResult datHang(FormCollection f)
+        public ActionResult datHang(string diaChi)
         {
-            HoaDon hoaDon = new HoaDon();
-            KhachHang kh = (KhachHang)Session["TaiKhoan"];
-            List<GioHang> listGioHang = layGioHang();
-            hoaDon.maKhachHang = kh.maKhachHang;
-            hoaDon.ngayBan = DateTime.Now;
-            hoaDon.ghiChu = "Chưa thanh toán";
-            hoaDon.tienBan = (decimal)tongThanhTien();
-            hoaDon.giamGia = 0;
-            hoaDon.tongTien = (decimal)tongThanhTien();
-            hoaDon.maNguoiDung = null;
-            db.HoaDons.InsertOnSubmit(hoaDon);
-            db.SubmitChanges();
-            foreach (var item in listGioHang)
+            if (string.IsNullOrEmpty(diaChi) || diaChi.Trim().Length < 15)
             {
-                CTHoaDon ctHD = new CTHoaDon();
-                ctHD.maHoaDon = hoaDon.maHoaDon;
-                ctHD.maSanPham = item.maSanPham;
-                ctHD.soLuong = item.soLuong;
-                ctHD.donGia = (decimal)item.donGia;
-                ctHD.giamGia = item.giamGia;
-                ctHD.thanhTien = (decimal)item.ThanhTien;
-                db.CTHoaDons.InsertOnSubmit(ctHD);
+                ViewData["Loi1"] = "Địa chỉ không hợp lệ!";
             }
-            db.SubmitChanges();
-            return RedirectToAction("HttpNotFound_404","HttpNotFound");
+            else
+            {
+                HoaDon hoaDon = new HoaDon();
+                KhachHang kh = (KhachHang)Session["TaiKhoan"];
+                List<GioHang> listGioHang = layGioHang();
+                kh.diaChi = diaChi;
+                db.SubmitChanges();
+                
+                hoaDon.maKhachHang = kh.maKhachHang;
+                hoaDon.ngayBan = DateTime.Now;
+                hoaDon.ghiChu = "Chưa thanh toán";
+                hoaDon.tienBan = (decimal)tongThanhTien();
+                hoaDon.giamGia = 0;
+                hoaDon.tongTien = (decimal)tongThanhTien();
+                hoaDon.maNguoiDung = null;
+                db.HoaDons.InsertOnSubmit(hoaDon);
+                db.SubmitChanges();
+                foreach (var item in listGioHang)
+                {
+                    CTHoaDon ctHD = new CTHoaDon();
+                    ctHD.maHoaDon = hoaDon.maHoaDon;
+                    ctHD.maSanPham = item.maSanPham;
+                    ctHD.soLuong = item.soLuong;
+                    ctHD.donGia = (decimal)item.donGia;
+                    ctHD.giamGia = item.giamGia;
+                    ctHD.thanhTien = (decimal)item.ThanhTien;
+                    db.CTHoaDons.InsertOnSubmit(ctHD);
+                }
+                db.SubmitChanges();
+            }
+            return RedirectToAction("HttpNotFound_404", "HttpNotFound");
         }
-
     }
 }
