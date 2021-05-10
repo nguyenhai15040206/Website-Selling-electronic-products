@@ -48,6 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -128,56 +129,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Banner.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CTHoaDon.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DanhMuc.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DonMua.cs" />
     <Compile Include="Models\GioHang.cs" />
-    <Compile Include="Models\HoaDon.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\KhachHang.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\KiemTraDuLieu.cs" />
-    <Compile Include="Models\LoaiTinTuc.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NguoiDung.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NhaCungCap.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NhaSanXuat.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QLSanPhamDienTu.Context.cs">
+    <Compile Include="Models\QLSanPhamDienTu.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>QLSanPhamDienTu.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QLSanPhamDienTu.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QLSanPhamDienTu.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>QLSanPhamDienTu.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SanPham.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TinTuc.cs">
-      <DependentUpon>QLSanPhamDienTu.tt</DependentUpon>
+      <DependentUpon>QLSanPhamDienTu.dbml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -215,16 +173,6 @@
     <Content Include="Images\SanPhams\OPPOA93_DEN.png" />
     <Content Include="Images\SanPhams\OPPORENO4_DEN.png" />
     <Content Include="Images\zalo.png" />
-    <Content Include="Models\QLSanPhamDienTu.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>QLSanPhamDienTu.edmx</DependentUpon>
-      <LastGenOutput>QLSanPhamDienTu.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\QLSanPhamDienTu.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>QLSanPhamDienTu.edmx</DependentUpon>
-      <LastGenOutput>QLSanPhamDienTu.cs</LastGenOutput>
-    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -250,6 +198,7 @@
     <Content Include="Views\LienHe\lienHe.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -301,17 +250,6 @@
     <Content Include="Views\NguoiDung\update.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\QLSanPhamDienTu.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>QLSanPhamDienTu.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Models\QLSanPhamDienTu.edmx.diagram">
-      <DependentUpon>QLSanPhamDienTu.edmx</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Banner\loadBannerActive.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +260,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DanhMucSanPham\LogoDanhMucLaptop.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SanPham\sanPhamTheoMaLoai.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\QLSanPhamDienTu.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>QLSanPhamDienTu.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Models\QLSanPhamDienTu.dbml.layout">
+      <DependentUpon>QLSanPhamDienTu.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

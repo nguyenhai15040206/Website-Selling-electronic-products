@@ -11,7 +11,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
     {
         //
         // GET: /NguoiDung/
-        QL_SanPhamEntities db = new QL_SanPhamEntities();
+        QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
         KiemTraDuLieu kiemTraDL = new KiemTraDuLieu();
 
         [HttpGet]
@@ -66,8 +66,8 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
                             kh.diaChi = diaChi;
                             kh.tenDangNhap = tenDangNhap;
                             kh.matKhau = matKhau;
-                            db.KhachHangs.Add(kh);
-                            db.SaveChanges();
+                            db.KhachHangs.InsertOnSubmit(kh);
+                            db.SubmitChanges();
                             return RedirectToAction("dangNhap","NguoiDung");
                         }
                         else
@@ -133,10 +133,10 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
 
 
         // thông tin tài khoản, cập nhật thông tin
-        public ActionResult thongTinTaiKhoan(int maKhachHang)
+        [HttpGet]
+        public ActionResult thongTinTaiKhoan()
         {
-            KhachHang khachHang = db.KhachHangs.SingleOrDefault(m => m.maKhachHang == maKhachHang);
-            return View(khachHang);
+            return View();
         }
         [HttpPost]
         public ActionResult thongTinTaiKhoan(KhachHang kh, FormCollection f)
@@ -149,42 +149,37 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
                 var diaChi = f["DiaChi"].ToString();
                 var matKhau = f["ReMatKhau"].ToString();
                 var nhapLai = f["NhapLaiMK"].ToString();
-                if (kh != null)
+                if (string.IsNullOrEmpty(tenKhachHang) || string.IsNullOrEmpty(soDienThoai) || string.IsNullOrEmpty(email)
+                    || string.IsNullOrEmpty(diaChi) || string.IsNullOrEmpty(matKhau))
                 {
-                    if (string.IsNullOrEmpty(tenKhachHang) || string.IsNullOrEmpty(soDienThoai) || string.IsNullOrEmpty(email)
-                        || string.IsNullOrEmpty(diaChi) || string.IsNullOrEmpty(matKhau))
-                    {
-                        ViewData["Loi1"] = "Các thông tin không được để trống!";
-                    }
-                    if (!string.IsNullOrEmpty(tenKhachHang) || !string.IsNullOrEmpty(soDienThoai) || !string.IsNullOrEmpty(email)
-                        || !string.IsNullOrEmpty(diaChi) || !string.IsNullOrEmpty(matKhau))
-                    {
+                    ViewData["Loi1"] = "Các thông tin không được để trống!";
+                }
+                if (!string.IsNullOrEmpty(tenKhachHang) && !string.IsNullOrEmpty(soDienThoai) && !string.IsNullOrEmpty(email)
+                    && !string.IsNullOrEmpty(diaChi) && !string.IsNullOrEmpty(matKhau))
+                {
 
-                        if (kiemTraDL.isPhoneNumber(soDienThoai))
+                    if (kiemTraDL.isPhoneNumber(soDienThoai))
+                    {
+                        kh.diaChi = diaChi;
+                        kh.tenKhachHang = tenKhachHang;
+                        kh.soDienThoai = soDienThoai;
+                        kh.email = email;
+                        if (matKhau.Trim() == nhapLai.Trim())
                         {
-                            kh.diaChi = diaChi;
-                            kh.tenKhachHang = tenKhachHang;
-                            kh.soDienThoai = soDienThoai;
-                            kh.email = email;
-                            if (matKhau.Trim() == nhapLai.Trim())
-                            {
-                                kh.matKhau = matKhau;
-                                db.KhachHangs.Attach(kh);
-                                db.Entry(kh).State = System.Data.EntityState.Modified;
-                                db.SaveChanges();
-                            }
-                            else
-                            {
-                                ViewData["Loi3"] = "Mật khẩu không khớp!";
-                            }
-
+                            kh.matKhau = matKhau;
+                            db.SubmitChanges();
                         }
                         else
                         {
-                            ViewData["Loi2"] = "Số điện thoại không hợp lệ";
+                            ViewData["Loi3"] = "Mật khẩu không khớp!";
                         }
 
                     }
+                    else
+                    {
+                        ViewData["Loi2"] = "Số điện thoại không hợp lệ";
+                    }
+
                 }
             }
             return View(kh);

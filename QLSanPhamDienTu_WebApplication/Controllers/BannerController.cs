@@ -11,7 +11,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
     {
         //
         // GET: /Banner/
-        QL_SanPhamEntities db = new QL_SanPhamEntities();
+        QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
 
         public ActionResult Index()
         {

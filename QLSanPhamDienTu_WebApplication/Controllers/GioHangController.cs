@@ -11,7 +11,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
     {
         //
         // GET: /GioHang/
-        QL_SanPhamEntities db = new QL_SanPhamEntities();
+        QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
 
         public List<GioHang> layGioHang()
         {
@@ -173,8 +173,8 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             hoaDon.giamGia = 0;
             hoaDon.tongTien = (decimal)tongThanhTien();
             hoaDon.maNguoiDung = null;
-            db.HoaDons.Add(hoaDon);
-            db.SaveChanges();
+            db.HoaDons.InsertOnSubmit(hoaDon);
+            db.SubmitChanges();
             foreach (var item in listGioHang)
             {
                 CTHoaDon ctHD = new CTHoaDon();
@@ -184,9 +184,9 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
                 ctHD.donGia = (decimal)item.donGia;
                 ctHD.giamGia = item.giamGia;
                 ctHD.thanhTien = (decimal)item.ThanhTien;
-                db.CTHoaDons.Add(ctHD);
+                db.CTHoaDons.InsertOnSubmit(ctHD);
             }
-            db.SaveChanges();
+            db.SubmitChanges();
             return RedirectToAction("HttpNotFound_404","HttpNotFound");
         }
 

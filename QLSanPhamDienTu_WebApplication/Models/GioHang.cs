@@ -7,7 +7,7 @@ namespace QLSanPhamDienTu_WebApplication.Models
 {
     public class GioHang
     {
-        QL_SanPhamEntities db = new QL_SanPhamEntities();
+        QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
         public int maSanPham { get; set; }
         public string tenSanPham { get; set; }
         public string hinhAnh { get; set; }

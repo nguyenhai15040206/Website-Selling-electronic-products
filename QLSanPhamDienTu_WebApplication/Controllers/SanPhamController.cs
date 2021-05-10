@@ -11,7 +11,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
     {
         //
         // GET: /SanPham/
-        QL_SanPhamEntities db = new QL_SanPhamEntities();
+        QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
 
 
         #region Sản phẩm điện thoại
@@ -31,6 +31,18 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             }
             else
                 return View(sp);
+        }
+
+        public ActionResult sanPhamTheoMaLoai(int maDanhMuc)
+        {
+            ViewBag.TongSPDT = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "DienThoai" && m.maDanhMuc==maDanhMuc).Count();
+            var sp = db.SanPhams.Where(m => m.maDanhMuc == maDanhMuc).ToList();
+            if(sp == null)
+            {
+
+            }
+            return View(sp);  
+
         }
         #endregion
 
@@ -52,10 +64,18 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             else
                 return View(sp);
         }
+
+        public ActionResult sanPhamTheoDanhMucLaptop(int maDanhMuc)
+        {
+            var sp = db.SanPhams.Where(m => m.maDanhMuc == maDanhMuc).ToList();
+            if(sp == null)
+            {
+
+            }    
+            return View(sp);
+        }
         #endregion
 
-
-        //a
 
     }
 }

@@ -12,7 +12,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         //
         // GET: /DanhMucSanPham/
 
-        QL_SanPhamEntities db = new QL_SanPhamEntities();
+        QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
         public ActionResult Index()
         {
             return View();
