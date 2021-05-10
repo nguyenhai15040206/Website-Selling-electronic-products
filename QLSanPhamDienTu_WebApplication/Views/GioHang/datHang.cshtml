@@ -1,36 +1,66 @@
 ﻿
+
 @using QLSanPhamDienTu_WebApplication.Models;
 @model List<GioHang>
 @{
     KhachHang kh = (KhachHang)Session["TaiKhoan"];
 }
-<table class="table" style="text-align:center;">
-        @using (Html.BeginForm("DatHang","Giohang",new { @maKhachHang = kh.maKhachHang} , FormMethod.Post))
-        {
-            @Html.ValidationSummary(true)
-            <tr>
-                <td>Tên Khách Hàng :</td>
-                <td style="font-weight:bold;">@kh.tenKhachHang</td>
-            </tr>
-            <tr>
-                <td>Địa Chỉ :</td>
-                <td style="font-weight:bold;"><input class="form-control" value="=@kh.diaChi" name="diaChi" /></td>
-            </tr>
-            <tr>
-                <td>Điện Thoại :</td>
-                <td style="font-weight:bold;">@kh.soDienThoai</td>
-            </tr>
-            <tr>
-                <td>Ngày Đặt :</td>
-                <td style="font-weight:bold;">@DateTime.Now.ToShortDateString()</td>
-            </tr>
-            <tr>
-                <td>Ngày Giao :</td>
-                <td ><input type="date" name="NgayGiao"/></td>
-            </tr>
-            
-            <tr>
-                <td colspan="2"><input class="btn btn-primary" type="submit" value="Đồng Ý Đặt Hàng"/></td>
-            </tr>
-        }
+@using (Html.BeginForm("DatHang", "Giohang", new { @maKhachHang = kh.maKhachHang }, FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <table class="table" style="text-align:left;">
+        <tr>
+            <td width="170px">Tên Khách Hàng :</td>
+            <td style="font-weight:bold;"><input class="form-control" value="@kh.tenKhachHang" name="tenKhachHang" /></td>
+        </tr>
+        <tr>
+            <td>Điện Thoại :</td>
+            <td style="font-weight:bold;"><input class="form-control" value="@kh.soDienThoai" /></td>
+        </tr>
+        <tr>
+            <td>Ngày Đặt :</td>
+            <td style="font-weight:bold;"><input class="form-control" readonly="readonly" value="@DateTime.Now.ToString("dd/MM/yyy")" /></td>
+        </tr>
+        <tr>
+            <td>Ngày Giao :</td>
+            <td><input type="date" class="form-control" name="ngayGiao" /></td>
+        </tr>
     </table>
+    <form>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio" style="font-size: 13px;" data-toggle="collapse" data-target="#demo">Giao hàng tận nơi miễn phí
+            </label>
+        </div>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio">Nhận tại cửa hàng
+            </label>
+        </div>
+    </form>
+    <div id="demo" class="collapse">
+        <table class="table" style="text-align:left;">
+            <tr>
+                <td width="170px">Địa Chỉ :</td>
+                <td style="font-weight:bold;" ><input class="form-control" value="@kh.diaChi" name="diaChi" /></td>
+            </tr>
+        </table>
+    </div>
+    <hr />
+    <h5 style="font-size: 17px; font-weight: 500">Chọn hình thức thanh toán</h5>
+    <form>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio">Trả tiền mặt khi nhận hàng
+            </label>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio">ATM nội địa/Internet Banking(Thanh toán qua VNPAY)
+            </label>
+        </div>
+    </form>
+    <br />
+    <center><input class="btn btn-primary" type="submit" value="Đồng Ý Đặt Hàng" /></center>
+
+}

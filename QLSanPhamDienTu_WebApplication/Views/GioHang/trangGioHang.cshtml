@@ -20,110 +20,99 @@
 
 @using QLSanPhamDienTu_WebApplication.Models;
 @model List<GioHang>
-    @{ 
-        KhachHang kh = (KhachHang)Session["TaiKhoan"];
-    }
+@{
+    KhachHang kh = (KhachHang)Session["TaiKhoan"];
+}
 <br />
-<div class="card bordered-dark">
-    <div class="card-header d-flex">
-        <div style="width:70%">
-            <h6 style="font-weight:bold">Có @ViewBag.TongSoLuong sản phẩm trong giỏ hàng của bạn</h6>
-        </div>
-        <div style="width:30%">
-            @if (Session["TaiKhoan"] != null)
-            {
-                <input type="button" class="form-control" value="Tiến hành đặt hàng" data-toggle="modal" data-target=".bs-example-modal-lg">
-                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="my">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Điền thông tin để tiến hành đặt hàng</h5>
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times</span></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="card">
-                                    <div class="card-body">
-                                        @Html.Action("datHang", "GioHang", new { @maKhachHang = kh.maKhachHang})
-                                        @*<form>
-                                            <div class="form-check-inline">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="optradio" style="font-size: 13px;">Giao hàng tận nơi miễn phí
-                                                </label>
-                                            </div>
-                                            <div class="form-check-inline">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="optradio">Nhận tại cửa hàng
-                                                </label>
-                                            </div>
-                                        </form>
-                                        <hr />
-                                        <h5 style="font-size: 17px; font-weight: 500">Chọn hình thức thanh toán</h5>
-                                        <form>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="optradio">Trả tiền mặt khi nhận hàng
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" name="optradio">ATM nội địa/Internet Banking(Thanh toán qua VNPAY)
-                                                </label>
-                                            </div>
-                                        </form>*@
+@if (Session["GioHang"] == null)
+{
+    <div class="card-body">
+        <center>
+            <img style="width:200px" src="https://salt.tikicdn.com/desktop/img/mascot@2x.png" />
+            <p>Không có sản phẩm nào trong giỏ hàng của bạn</p>
+            <button type="button" class="btn btn-outline-primary">Tiếp tục mua sản phẩm</button>
+        </center>
+    </div>
+}
+else
+{
+    <div class="card bordered-dark">
+        <div class="card-header d-flex">
+            <div style="width:70%">
+                <h6 style="font-weight:bold">Có @ViewBag.TongSoLuong sản phẩm trong giỏ hàng của bạn</h6>
+            </div>
+            <div style="width:30%">
+                @if (Session["TaiKhoan"] != null)
+                {
+                    <input type="button" class="form-control" value="Tiến hành đặt hàng" data-toggle="modal" data-target=".bs-example-modal-lg">
+                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="my">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Điền thông tin để tiến hành đặt hàng</h5>
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            @Html.Action("datHang", "GioHang", new { @maKhachHang = kh.maKhachHang })
+                                        </div>
 
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }else{
-                <a href="@Url.Action("dangNhap","NguoiDung")" style="text-decoration:none"><input type="button" class="form-control" value="Tiến hành đăng nhập để đặt hàng"></a>
-            }
+                }
+                else
+                {
+                    <a href="@Url.Action("dangNhap", "NguoiDung")" style="text-decoration:none"><input type="button" class="form-control" value="Tiến hành đăng nhập để đặt hàng"></a>
+                }
+            </div>
         </div>
-    </div>
+
         @foreach (var item in Model)
         {
             <div class="card-body">
                 @using (@Html.BeginForm("capNhatGioHang", "GioHang", new { @maSP = item.maSanPham }))
                 {
-                <div class="d-flex">
-                    <div style="width:15%">
-                        <img style="width:100%; height:140px" src="../Images/SanPhams/@item.hinhAnh" />
-                    </div>
-                    <div style="width:45%">
-                        <span>@item.tenSanPham</span>
-                    </div>
-                    <div style="width:20%">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <input type="button" value="-" onclick="tru()" style="width:30px" class=""/>
-                            </div>
-                            <input type="number" class=""  value="@item.soLuong" style="width:35px;text-align:center; text-decoration:none;" disabled="disabled" id="txtSL" name="txtSoLuong" />
-                            <div class="input-group-append">
-                                <input type="button" value="+" style="width:30px" onclick="cong()" class=""/>
-                            </div>
+                    <div class="d-flex">
+                        <div style="width:15%">
+                            <img style="width:100%; height:140px" src="../Images/SanPhams/@item.hinhAnh" />
                         </div>
-                        <a href="@Url.Action("xoaSanPhamTrongGioHang_1Sp", "GioHang", new { @maSP = item.maSanPham })" style="font-size:10px; font-weight:500"><i class="fas fa delete"></i>Xóa</a>
-                    </div>
-                    <div style="width:20%">
-                        <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@item.ThanhTien))<span style="text-decoration-line:underline">đ</span></span><br />
-                        <del><span class="text-dark " style="font-size:16px;">@string.Format("{0:0,0}", @item.ThanhTienGiamGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                        <div style="width:45%">
+                            <span>@item.tenSanPham</span>
+                        </div>
+                        <div style="width:20%">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <input type="button" value="-" onclick="tru()" style="width:30px" class="" />
+                                </div>
+                                <input type="number" class="" value="@item.soLuong" style="width:35px;text-align:center; text-decoration:none;" disabled="disabled" id="txtSL" name="txtSoLuong" />
+                                <div class="input-group-append">
+                                    <input type="button" value="+" style="width:30px" onclick="cong()" class="" />
+                                </div>
+                            </div>
+                            <a href="@Url.Action("xoaSanPhamTrongGioHang_1Sp", "GioHang", new { @maSP = item.maSanPham })" style="font-size:10px; font-weight:500"><i class="fas fa delete"></i>Xóa</a>
+                        </div>
+                        <div style="width:20%">
+                            <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@item.ThanhTien))<span style="text-decoration-line:underline">đ</span></span><br />
+                            <del><span class="text-dark " style="font-size:16px;">@string.Format("{0:0,0}", @item.ThanhTienGiamGia)<span style="text-decoration-line:underline">đ</span></span></del>
 
+                        </div>
                     </div>
-                </div>
                 }
             </div>
         }
-    <div class="card-footer">
+        <div class="card-footer">
             <div class="row">
                 <div class="col-7">
 
                 </div>
                 <div class="col-5">
-                    <span style="font-size:18px; font-weight:500">Tổng tiền thanh toán: <span style="color:red; margin-left:10px; font-size:17px">@string.Format("{0:0,0}",@ViewBag.TongThanhTien)<span style="text-decoration-line:underline">đ</span></span></span>
+                    <span style="font-size:18px; font-weight:500">Tổng tiền thanh toán: <span style="color:red; margin-left:10px; font-size:17px">@string.Format("{0:0,0}", @ViewBag.TongThanhTien)<span style="text-decoration-line:underline">đ</span></span></span>
                 </div>
             </div>
+        </div>
     </div>
-</div>
+}

@@ -172,7 +172,8 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             else
             {
                 HoaDon hoaDon = new HoaDon();
-                KhachHang kh = (KhachHang)Session["TaiKhoan"];
+                KhachHang khachHang = (KhachHang)Session["TaiKhoan"];
+                var kh = db.KhachHangs.Single(m => m.maKhachHang == khachHang.maKhachHang);
                 List<GioHang> listGioHang = layGioHang();
                 kh.diaChi = diaChi;
                 db.SubmitChanges();
@@ -198,6 +199,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
                     db.CTHoaDons.InsertOnSubmit(ctHD);
                 }
                 db.SubmitChanges();
+                listGioHang.Clear();
             }
             return RedirectToAction("HttpNotFound_404", "HttpNotFound");
         }
