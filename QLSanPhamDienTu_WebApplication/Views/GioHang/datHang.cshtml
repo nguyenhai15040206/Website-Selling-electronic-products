@@ -4,6 +4,32 @@
 @{
     KhachHang kh = (KhachHang)Session["TaiKhoan"];
 }
+<form>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio" style="font-size: 13px;">Giao hàng tận nơi miễn phí
+            </label>
+        </div>
+        <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio">Nhận tại cửa hàng
+            </label>
+        </div>
+    </form>
+    <hr />
+    <h5 style="font-size: 17px; font-weight: 500">Chọn hình thức thanh toán</h5>
+    <form>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio">Trả tiền mặt khi nhận hàng
+            </label>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio">ATM nội địa/Internet Banking(Thanh toán qua VNPAY)
+            </label>
+        </div>
+    </form>
 @using (Html.BeginForm("datHang", "GioHang", new { @maKhachHang = kh.maKhachHang }, FormMethod.Post))
 {
     @Html.ValidationSummary(true){
@@ -11,15 +37,15 @@
         <table id="datHang" class="table" style="text-align:left;">
             <tr>
                 <td width="170px">Tên Khách Hàng :</td>
-                <td style="font-weight:bold;"><input class="form-control" onchange="kiemTra()" value="@kh.tenKhachHang" name="tenKhachHang" id="tenKhachHang" />@ViewData["Loi2"]</td>
+                <td style="font-weight:bold;"><input class="form-control" oninput="kiemTraTenKhachHang()" value="@kh.tenKhachHang" name="tenKhachHang" id="tenKhachHang" />@ViewData["Loi2"]</td>
             </tr>
             <tr>
                 <td>Điện Thoại :</td>
-                <td style="font-weight:bold;"><input name="soDienThoai" id="soDienThoai" onchange="kiemTraSDT()" class="form-control" value="@kh.soDienThoai" /></td>
+                <td style="font-weight:bold;"><input name="soDienThoai" id="soDienThoai" oninput="kiemTraSDT()" class="form-control" value="@kh.soDienThoai" /></td>
             </tr>
             <tr>
                 <td width="170px">Địa Chỉ giao hàng :</td>
-                <td style="font-weight:bold;"><input class="form-control" value="@kh.diaChi" name="diaChi" /></td>
+                <td style="font-weight:bold;"><input class="form-control"  name="diaChi" id="diaChi" oninput="kiemTraDiaChi()" /></td>
             </tr>
             <tr>
                 <td>Ngày Đặt :</td>
@@ -27,76 +53,77 @@
             </tr>
             <tr>
                 <td>Ngày Giao :</td>
-                <td><input type="date" class="form-control" name="ngayGiao" /></td>
+                <td><input class="form-control" name="ngayGiao" value="@DateTime.Now.AddDays(7).ToString("dd/MM/yyy")" readonly="readonly" /></td>
             </tr>
         </table>
-        @*<form>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio" style="font-size: 13px;">Giao hàng tận nơi miễn phí
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio">Nhận tại cửa hàng
-                    </label>
-                </div>
-            </form>
-            <hr />
-            <h5 style="font-size: 17px; font-weight: 500">Chọn hình thức thanh toán</h5>
-            <form>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio">Trả tiền mặt khi nhận hàng
-                    </label>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="optradio">ATM nội địa/Internet Banking(Thanh toán qua VNPAY)
-                    </label>
-                </div>
-            </form>*@
-        <div id="result">
-            @ViewData["Loi2"]
+        <div style="color:red" id="result">
+
         </div>
         <br />
-        <center><button class="btn btn-primary" disabled="disabled" id="btn" >Đồng Ý Đặt Hàng</button></center>
+        <center><button class="btn btn-primary" disabled="disabled" id="btn">Đồng Ý Đặt Hàng</button></center>
 
 
     }
 }
 
-<script>
-    function kiemTra() {
+<script type="text/javascript">
+    function kiemTraTenKhachHang() {
         var tenKhachHang = document.getElementById('tenKhachHang');
-        if (tenKhachHang.value == "") {
+        if (tenKhachHang.value.trim() == "") {
             document.getElementById('tenKhachHang').style.borderColor = "red";
-            //document.getElementById('btn').disabled = false;
             document.getElementById('result').innerHTML = "Tên khách hàng không được để trống!";
         }
         else {
-
+            document.getElementById('tenKhachHang').style.borderColor = "green";
+            document.getElementById('result').innerHTML = "";
         }
     }
 
     function kiemTraSDT() {
         var soDienThoai = document.getElementById('soDienThoai');
-        if (tenKhachHang.value.length == "" || soDienThoai.value.length > 10) {
+        if (tenKhachHang.value.trim().length == "" || is_phonenumber(soDienThoai.value) == false) {
             document.getElementById('soDienThoai').style.borderColor = "red";
             document.getElementById('result').innerHTML = "Số điện thoại không hợp lệ";
         }
         else {
-            
+            document.getElementById('soDienThoai').style.borderColor = "green";
+            document.getElementById('result').innerHTML = "";
+
         }
     }
 
-    document.getElementById('datHang').addEventListener('input', function() {
-            if (tenKhachHang.value.length > 0) {
-                document.getElementById('btn').removeAttribute('disabled');
-            }
-            else {
-                document.getElementById('btn').setAttribute('disabled', 'disabled');
-            }
+    function kiemTraDiaChi() {
+        var diaChi = document.getElementById('diaChi');
+        if (diaChi.value.trim()== "" || (diaChi.value.trim().length < 30)) {
+            document.getElementById('diaChi').style.borderColor = "red";
+            document.getElementById('result').innerHTML = "Địa chỉ không được bỏ trống (Địa chỉ không hợp lệ)";
         }
-        )
+        else {
+            document.getElementById('diaChi').style.borderColor = "green";
+            document.getElementById('result').innerHTML = "";
+
+        }
+    }
+
+    // kiểm tra số điện thoại
+    function is_phonenumber(phonenumber) {
+        var phoneno = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+        if (phoneno.test(phonenumber)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    document.getElementById('datHang').addEventListener('input', function () {
+        if (tenKhachHang.value.trim().length > 0 && is_phonenumber(soDienThoai.value.trim())
+            && diaChi.value.trim().length >= 30) {
+            document.getElementById('btn').removeAttribute('disabled');
+        }
+        else {
+            document.getElementById('btn').setAttribute('disabled', 'disabled');
+        }
+    }
+    )
 </script>

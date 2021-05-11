@@ -166,61 +166,33 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             KhachHang khachHang = (KhachHang)Session["TaiKhoan"];
             var kh = db.KhachHangs.Single(m => m.maKhachHang == khachHang.maKhachHang);
             List<GioHang> listGioHang = layGioHang();
-            if (string.IsNullOrEmpty(diaChi) || diaChi.Trim().Length < 15)
+            kh.soDienThoai = soDienThoai;
+            kh.tenKhachHang = tenKhachHang;
+            kh.diaChi = diaChi;
+            db.SubmitChanges();
+            hoaDon.maKhachHang = kh.maKhachHang;
+            hoaDon.ngayBan = DateTime.Now;
+            hoaDon.ngayGiao = DateTime.Now.AddDays(7);
+            hoaDon.ghiChu = "Chưa thanh toán";
+            hoaDon.tienBan = (decimal)tongThanhTien();
+            hoaDon.giamGia = 0;
+            hoaDon.tongTien = (decimal)tongThanhTien();
+            hoaDon.maNguoiDung = null;
+            db.HoaDons.InsertOnSubmit(hoaDon);
+            db.SubmitChanges();
+            foreach (var item in listGioHang)
             {
-                ViewData["Loi1"] = "Địa chỉ không hợp lệ!";
+                CTHoaDon ctHD = new CTHoaDon();
+                ctHD.maHoaDon = hoaDon.maHoaDon;
+                ctHD.maSanPham = item.maSanPham;
+                ctHD.soLuong = item.soLuong;
+                ctHD.donGia = (decimal)item.donGia;
+                ctHD.giamGia = item.giamGia;
+                ctHD.thanhTien = (decimal)item.ThanhTien;
+                db.CTHoaDons.InsertOnSubmit(ctHD);
             }
-            else
-            {
-                if (string.IsNullOrEmpty(tenKhachHang))
-                {
-                    ViewData["Loi2"] = "Tên khách hàng không được để trống";
-                }
-                else
-                {
-                    if (string.IsNullOrEmpty(soDienThoai))
-                    {
-                        ViewData["Loi3"] = "Số điện thoại không được để trống!";
-                    }
-                    else
-                    {
-                        if (ktdl.isPhoneNumber(soDienThoai))
-                        {
-                            kh.soDienThoai = soDienThoai;
-                            kh.tenKhachHang = tenKhachHang;
-                            kh.diaChi = diaChi;
-                            db.SubmitChanges();
-                            hoaDon.maKhachHang = kh.maKhachHang;
-                            hoaDon.ngayBan = DateTime.Now;
-                            hoaDon.ngayGiao = DateTime.Now.AddDays(7); 
-                            hoaDon.ghiChu = "Chưa thanh toán";
-                            hoaDon.tienBan = (decimal)tongThanhTien();
-                            hoaDon.giamGia = 0;
-                            hoaDon.tongTien = (decimal)tongThanhTien();
-                            hoaDon.maNguoiDung = null;
-                            db.HoaDons.InsertOnSubmit(hoaDon);
-                            db.SubmitChanges();
-                            foreach (var item in listGioHang)
-                            {
-                                CTHoaDon ctHD = new CTHoaDon();
-                                ctHD.maHoaDon = hoaDon.maHoaDon;
-                                ctHD.maSanPham = item.maSanPham;
-                                ctHD.soLuong = item.soLuong;
-                                ctHD.donGia = (decimal)item.donGia;
-                                ctHD.giamGia = item.giamGia;
-                                ctHD.thanhTien = (decimal)item.ThanhTien;
-                                db.CTHoaDons.InsertOnSubmit(ctHD);
-                            }
-                            db.SubmitChanges();
-                            listGioHang.Clear();
-                        }
-                        else
-                        {
-                            ViewData["Loi4"] = "Số điện thoại không hợp lệ!";
-                        }    
-                    }    
-                }
-            }
+            db.SubmitChanges();
+            listGioHang.Clear();
             return RedirectToAction("HttpNotFound_404", "HttpNotFound");
         }
 

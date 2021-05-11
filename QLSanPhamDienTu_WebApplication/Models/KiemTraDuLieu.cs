@@ -28,5 +28,17 @@ namespace QLSanPhamDienTu_WebApplication.Models
             }
             return false;
         }
+
+        public bool isTextContainSPace(string input)
+        {
+            string str;
+            for(int i=0; i < input.Length; i++)
+            {
+                str = input.Substring(i, 1);
+                if (str == " ")
+                    return false;
+            }
+            return true;
+        }
     }
 }

@@ -29,28 +29,32 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             var tenDangNhap = f["TenDangNhap"];
             var matKhau = f["MatKhau"];
             var reMatKHau = f["ReMatKhau"];
-            if (string.IsNullOrEmpty(tenKH))
+            if (string.IsNullOrEmpty(tenKH.Trim()))
             {
                 ViewData["Loi1"] = "Họ tên không được để trống";
             }
-            if (string.IsNullOrEmpty(soDienThoai))
+            if(string.IsNullOrEmpty(email.Trim()))
+            {
+                ViewData["LoiEmail"] = "Email không được để trống";
+            }    
+            if (string.IsNullOrEmpty(soDienThoai.Trim()))
             {
                 ViewData["Loi2"] = "Số điện thoại không được bỏ trống";
             }
-            if (string.IsNullOrEmpty(tenDangNhap) || (tenDangNhap.Trim().Length <5 && tenDangNhap.Trim().Length >30))
+            if (string.IsNullOrEmpty(tenDangNhap.Trim()) || kiemTraDL.isTextContainSPace(tenDangNhap.Trim())==false || (tenDangNhap.Trim().Length <5 && tenDangNhap.Trim().Length >30))
             {
-                ViewData["Loi3"] = "Nhập tên đăng nhập từ 5 đến 30 kí tự";
+                ViewData["Loi3"] = "Tên đăng nhập từ 5 đến 30 kí tự, không bao gồm khoảng trắng";
             }
-            if(string.IsNullOrEmpty(matKhau) ||  (matKhau.Trim().Length < 5 && matKhau.Trim().Length > 30))
+            if(string.IsNullOrEmpty(matKhau.Trim()) || kiemTraDL.isTextContainSPace(matKhau.Trim())== false ||  (matKhau.Trim().Length < 5 && matKhau.Trim().Length > 30))
             {
-                ViewData["Loi4"] = "Nhập mật khẩu từ 5 đến 30 kí tự";
+                ViewData["Loi4"] = "Mật khẩu từ 5 đến 30 kí tự, không bao gồm khoảng trắng";
             }
             if (string.IsNullOrEmpty(reMatKHau))
             {
                 ViewData["Loi5"] = "Nhập lại mật khẩu";
             }
-            if (!string.IsNullOrEmpty(tenKH) && !string.IsNullOrEmpty(soDienThoai) && !string.IsNullOrEmpty(tenDangNhap) &&
-                !string.IsNullOrEmpty(matKhau) && !string.IsNullOrEmpty(reMatKHau))
+            if (!string.IsNullOrEmpty(tenKH.Trim()) && !string.IsNullOrEmpty(email.Trim()) &&!string.IsNullOrEmpty(soDienThoai.Trim()) && !string.IsNullOrEmpty(tenDangNhap.Trim()) &&
+                !string.IsNullOrEmpty(matKhau.Trim()) && !string.IsNullOrEmpty(reMatKHau.Trim()))
             {
                 var kiemTra = db.KhachHangs.Count(m => m.tenDangNhap == tenDangNhap);
                 if (kiemTra == 0)

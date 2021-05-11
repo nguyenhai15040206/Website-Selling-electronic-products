@@ -31,7 +31,7 @@
             <form class="user">
                 <div class="form-group">
                     <div class="mb-3 mb-sm-0">
-                        @Html.TextBox("HoTen", "", new { @class = "form-control form-control-user", @placeholder = "Nhập họ và tên", @type = "text" }) <span class="text-danger">@ViewData["Loi1"]</span>
+                        @Html.TextBox("HoTen", "", new { @class = "form-control form-control-user", @placeholder = "Nhập họ và tên", @type = "text", @id="tenKhachHang" }) <span class="text-danger">@ViewData["Loi1"]</span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -71,5 +71,6 @@
 </div>
 }
 }
+
 
 

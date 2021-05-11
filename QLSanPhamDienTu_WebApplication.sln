@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLSanPhamDienTu_WebApplication", "QLSanPhamDienTu_WebApplication\QLSanPhamDienTu_WebApplication.csproj", "{CAE646F1-02CA-414C-A495-5276B0B4E4C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{4912EFB3-7EEB-4414-91C1-1DD345721D68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +17,15 @@ Global
 		{CAE646F1-02CA-414C-A495-5276B0B4E4C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAE646F1-02CA-414C-A495-5276B0B4E4C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAE646F1-02CA-414C-A495-5276B0B4E4C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4912EFB3-7EEB-4414-91C1-1DD345721D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4912EFB3-7EEB-4414-91C1-1DD345721D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4912EFB3-7EEB-4414-91C1-1DD345721D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4912EFB3-7EEB-4414-91C1-1DD345721D68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF755415-814B-4A6B-8FA7-55C8CA79D3E2}
 	EndGlobalSection
 EndGlobal
