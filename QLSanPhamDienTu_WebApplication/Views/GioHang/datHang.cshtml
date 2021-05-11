@@ -5,31 +5,37 @@
 @{
     KhachHang kh = (KhachHang)Session["TaiKhoan"];
 }
-@using (Html.BeginForm("DatHang", "Giohang", new { @maKhachHang = kh.maKhachHang }, FormMethod.Post))
+@using (Html.BeginForm("datHang", "GioHang", new { @maKhachHang = kh.maKhachHang }, FormMethod.Post))
 {
-    @Html.ValidationSummary(true)
-    <table class="table" style="text-align:left;">
-        <tr>
-            <td width="170px">Tên Khách Hàng :</td>
-            <td style="font-weight:bold;"><input class="form-control" value="@kh.tenKhachHang" name="tenKhachHang" /></td>
-        </tr>
-        <tr>
-            <td>Điện Thoại :</td>
-            <td style="font-weight:bold;"><input class="form-control" value="@kh.soDienThoai" /></td>
-        </tr>
-        <tr>
-            <td>Ngày Đặt :</td>
-            <td style="font-weight:bold;"><input class="form-control" readonly="readonly" value="@DateTime.Now.ToString("dd/MM/yyy")" /></td>
-        </tr>
-        <tr>
-            <td>Ngày Giao :</td>
-            <td><input type="date" class="form-control" name="ngayGiao" /></td>
-        </tr>
-    </table>
+    @Html.ValidationSummary(true){
+
+<table class="table" style="text-align:left;">
+    <tr>
+        <td width="170px">Tên Khách Hàng :</td>
+        <td style="font-weight:bold;"><input class="form-control" value="@kh.tenKhachHang" name="tenKhachHang" />@ViewData["Loi2"]</td>
+    </tr>
+    <tr>
+        <td>Điện Thoại :</td>
+        <td style="font-weight:bold;"><input name="soDienThoai" class="form-control" value="@kh.soDienThoai" /></td>
+    </tr>
+    <tr>
+        <td width="170px">Địa Chỉ :</td>
+        <td style="font-weight:bold;"><input class="form-control" value="@kh.diaChi" name="diaChi" /></td>
+    </tr>
+    <tr>
+        <td>Ngày Đặt :</td>
+        <td style="font-weight:bold;"><input class="form-control" readonly="readonly" value="@DateTime.Now.ToString("dd/MM/yyy")" /></td>
+    </tr>
+    <tr>
+        <td>Ngày Giao :</td>
+        <td><input type="date" class="form-control" name="ngayGiao" /></td>
+    </tr>
+</table>
+<center><input class="btn btn-primary" type="submit" value="Đồng Ý Đặt Hàng" /></center>
     <form>
         <div class="form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio" style="font-size: 13px;" data-toggle="collapse" data-target="#demo">Giao hàng tận nơi miễn phí
+                <input type="radio" class="form-check-input" name="optradio" style="font-size: 13px;" >Giao hàng tận nơi miễn phí
             </label>
         </div>
         <div class="form-check-inline">
@@ -38,14 +44,6 @@
             </label>
         </div>
     </form>
-    <div id="demo" class="collapse">
-        <table class="table" style="text-align:left;">
-            <tr>
-                <td width="170px">Địa Chỉ :</td>
-                <td style="font-weight:bold;" ><input class="form-control" value="@kh.diaChi" name="diaChi" /></td>
-            </tr>
-        </table>
-    </div>
     <hr />
     <h5 style="font-size: 17px; font-weight: 500">Chọn hình thức thanh toán</h5>
     <form>
@@ -61,6 +59,5 @@
         </div>
     </form>
     <br />
-    <center><input class="btn btn-primary" type="submit" value="Đồng Ý Đặt Hàng" /></center>
-    
+    }
 }

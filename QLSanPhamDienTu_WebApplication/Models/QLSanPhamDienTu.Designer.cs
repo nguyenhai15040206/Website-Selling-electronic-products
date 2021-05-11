@@ -1685,6 +1685,8 @@ namespace QLSanPhamDienTu_WebApplication.Models
 		
 		private System.Nullable<System.DateTime> _ngayBan;
 		
+		private System.Nullable<System.DateTime> _ngayGiao;
+		
 		private System.Nullable<int> _maKhachHang;
 		
 		private System.Nullable<decimal> _tienBan;
@@ -1711,6 +1713,8 @@ namespace QLSanPhamDienTu_WebApplication.Models
     partial void OnmaHoaDonChanged();
     partial void OnngayBanChanging(System.Nullable<System.DateTime> value);
     partial void OnngayBanChanged();
+    partial void OnngayGiaoChanging(System.Nullable<System.DateTime> value);
+    partial void OnngayGiaoChanged();
     partial void OnmaKhachHangChanging(System.Nullable<int> value);
     partial void OnmaKhachHangChanged();
     partial void OntienBanChanging(System.Nullable<decimal> value);
@@ -1769,6 +1773,26 @@ namespace QLSanPhamDienTu_WebApplication.Models
 					this._ngayBan = value;
 					this.SendPropertyChanged("ngayBan");
 					this.OnngayBanChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ngayGiao", DbType="Date")]
+		public System.Nullable<System.DateTime> ngayGiao
+		{
+			get
+			{
+				return this._ngayGiao;
+			}
+			set
+			{
+				if ((this._ngayGiao != value))
+				{
+					this.OnngayGiaoChanging(value);
+					this.SendPropertyChanging();
+					this._ngayGiao = value;
+					this.SendPropertyChanged("ngayGiao");
+					this.OnngayGiaoChanged();
 				}
 			}
 		}
@@ -2062,8 +2086,8 @@ namespace QLSanPhamDienTu_WebApplication.Models
 			this._HoaDons = new EntitySet<HoaDon>(new Action<HoaDon>(this.attach_HoaDons), new Action<HoaDon>(this.detach_HoaDons));
 			OnCreated();
 		}
-
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_maKhachHang", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_maKhachHang", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int maKhachHang
 		{
 			get

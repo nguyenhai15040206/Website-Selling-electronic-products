@@ -74,6 +74,7 @@
     <Type Name="HoaDon">
       <Column Name="maHoaDon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ngayBan" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ngayGiao" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="maKhachHang" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="tienBan" Type="System.Decimal" DbType="Money" CanBeNull="true" />
       <Column Name="giamGia" Type="System.Double" DbType="Float" CanBeNull="true" />
