@@ -1,5 +1,4 @@
 ﻿
-
 @using QLSanPhamDienTu_WebApplication.Models;
 @model List<GioHang>
 @{
@@ -9,55 +8,95 @@
 {
     @Html.ValidationSummary(true){
 
-<table class="table" style="text-align:left;">
-    <tr>
-        <td width="170px">Tên Khách Hàng :</td>
-        <td style="font-weight:bold;"><input class="form-control" value="@kh.tenKhachHang" name="tenKhachHang" />@ViewData["Loi2"]</td>
-    </tr>
-    <tr>
-        <td>Điện Thoại :</td>
-        <td style="font-weight:bold;"><input name="soDienThoai" class="form-control" value="@kh.soDienThoai" /></td>
-    </tr>
-    <tr>
-        <td width="170px">Địa Chỉ :</td>
-        <td style="font-weight:bold;"><input class="form-control" value="@kh.diaChi" name="diaChi" /></td>
-    </tr>
-    <tr>
-        <td>Ngày Đặt :</td>
-        <td style="font-weight:bold;"><input class="form-control" readonly="readonly" value="@DateTime.Now.ToString("dd/MM/yyy")" /></td>
-    </tr>
-    <tr>
-        <td>Ngày Giao :</td>
-        <td><input type="date" class="form-control" name="ngayGiao" /></td>
-    </tr>
-</table>
-<center><input class="btn btn-primary" type="submit" value="Đồng Ý Đặt Hàng" /></center>
-    <form>
-        <div class="form-check-inline">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio" style="font-size: 13px;" >Giao hàng tận nơi miễn phí
-            </label>
+        <table id="datHang" class="table" style="text-align:left;">
+            <tr>
+                <td width="170px">Tên Khách Hàng :</td>
+                <td style="font-weight:bold;"><input class="form-control" onchange="kiemTra()" value="@kh.tenKhachHang" name="tenKhachHang" id="tenKhachHang" />@ViewData["Loi2"]</td>
+            </tr>
+            <tr>
+                <td>Điện Thoại :</td>
+                <td style="font-weight:bold;"><input name="soDienThoai" id="soDienThoai" onchange="kiemTraSDT()" class="form-control" value="@kh.soDienThoai" /></td>
+            </tr>
+            <tr>
+                <td width="170px">Địa Chỉ giao hàng :</td>
+                <td style="font-weight:bold;"><input class="form-control" value="@kh.diaChi" name="diaChi" /></td>
+            </tr>
+            <tr>
+                <td>Ngày Đặt :</td>
+                <td style="font-weight:bold;"><input class="form-control" readonly="readonly" value="@DateTime.Now.ToString("dd/MM/yyy")" /></td>
+            </tr>
+            <tr>
+                <td>Ngày Giao :</td>
+                <td><input type="date" class="form-control" name="ngayGiao" /></td>
+            </tr>
+        </table>
+        @*<form>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optradio" style="font-size: 13px;">Giao hàng tận nơi miễn phí
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optradio">Nhận tại cửa hàng
+                    </label>
+                </div>
+            </form>
+            <hr />
+            <h5 style="font-size: 17px; font-weight: 500">Chọn hình thức thanh toán</h5>
+            <form>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optradio">Trả tiền mặt khi nhận hàng
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optradio">ATM nội địa/Internet Banking(Thanh toán qua VNPAY)
+                    </label>
+                </div>
+            </form>*@
+        <div id="result">
+            @ViewData["Loi2"]
         </div>
-        <div class="form-check-inline">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio">Nhận tại cửa hàng
-            </label>
-        </div>
-    </form>
-    <hr />
-    <h5 style="font-size: 17px; font-weight: 500">Chọn hình thức thanh toán</h5>
-    <form>
-        <div class="form-check">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio">Trả tiền mặt khi nhận hàng
-            </label>
-        </div>
-        <div class="form-check">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optradio">ATM nội địa/Internet Banking(Thanh toán qua VNPAY)
-            </label>
-        </div>
-    </form>
-    <br />
+        <br />
+        <center><button class="btn btn-primary" disabled="disabled" id="btn" >Đồng Ý Đặt Hàng</button></center>
+
+
     }
 }
+
+<script>
+    function kiemTra() {
+        var tenKhachHang = document.getElementById('tenKhachHang');
+        if (tenKhachHang.value == "") {
+            document.getElementById('tenKhachHang').style.borderColor = "red";
+            //document.getElementById('btn').disabled = false;
+            document.getElementById('result').innerHTML = "Tên khách hàng không được để trống!";
+        }
+        else {
+
+        }
+    }
+
+    function kiemTraSDT() {
+        var soDienThoai = document.getElementById('soDienThoai');
+        if (tenKhachHang.value.length == "" || soDienThoai.value.length > 10) {
+            document.getElementById('soDienThoai').style.borderColor = "red";
+            document.getElementById('result').innerHTML = "Số điện thoại không hợp lệ";
+        }
+        else {
+            
+        }
+    }
+
+    document.getElementById('datHang').addEventListener('input', function() {
+            if (tenKhachHang.value.length > 0) {
+                document.getElementById('btn').removeAttribute('disabled');
+            }
+            else {
+                document.getElementById('btn').setAttribute('disabled', 'disabled');
+            }
+        }
+        )
+</script>

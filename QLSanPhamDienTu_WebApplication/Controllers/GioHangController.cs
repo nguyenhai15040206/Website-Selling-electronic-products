@@ -213,7 +213,6 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
                             }
                             db.SubmitChanges();
                             listGioHang.Clear();
-                            return RedirectToAction("HttpNotFound_404", "HttpNotFound");
                         }
                         else
                         {
@@ -222,7 +221,8 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
                     }    
                 }
             }
-            return RedirectToAction("datHang",kh);
+            return RedirectToAction("HttpNotFound_404", "HttpNotFound");
         }
+
     }
 }
