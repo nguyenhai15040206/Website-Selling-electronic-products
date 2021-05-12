@@ -21,5 +21,10 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             return View();
         }
 
+        public ActionResult DanhSachSanPhamRong()
+        {
+            return View();
+        }
+
     }
 }

@@ -39,7 +39,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             var sp = db.SanPhams.Where(m => m.maDanhMuc == maDanhMuc).ToList();
             if(sp == null)
             {
-
+                return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
             }
             return View(sp);  
 
