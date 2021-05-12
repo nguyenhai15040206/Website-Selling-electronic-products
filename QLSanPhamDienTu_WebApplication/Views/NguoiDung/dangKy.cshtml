@@ -31,46 +31,48 @@
             <form class="user">
                 <div class="form-group">
                     <div class="mb-3 mb-sm-0">
-                        @Html.TextBox("HoTen", "", new { @class = "form-control form-control-user", @placeholder = "Nhập họ và tên", @type = "text", @id="tenKhachHang" }) <span class="text-danger">@ViewData["Loi1"]</span>
+                        <input id="tenKhachHang" name="HoTen" class="form-control form-control-user" placeholder = "Nhập họ và tên" type = "text" /><span class="text-danger">@ViewData["Loi1"]</span>
+                        @*@Html.TextBox("HoTen", "", new { @class = "form-control form-control-user", @placeholder = "Nhập họ và tên", @type = "text", @id="tenKhachHang" }) <span class="text-danger">@ViewData["Loi1"]</span>*@
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-7 mb-3 mb-sm-0">
-                        @Html.TextBox("Email", "", new { @class = "form-control form-control-user", @placeholder = "a@gmail.com", @type = "email" })
+                        <input id="email" name="Email" class="form-control form-control-user" placeholder="a@gmail.com" type="email" />
+                        @*@Html.TextBox("Email", "", new { @class = "form-control form-control-user", @placeholder = "a@gmail.com", @type = "email" })*@
                     </div>
                     <div class="col-sm-5">
-                        @Html.TextBox("DienThoai", "", new { @class = "form-control form-control-user", @placeholder = "Nhập số điện thoại", @type = "tel" }) <span class="text-danger">@ViewData["Loi2"] @ViewData["Loi6"] </span>
+                        <input id="soDienThoai" name="DienThoai" class="form-control form-control-user" placeholder="Nhập số điện thoại" type="tel" /><span class="text-danger">@ViewData["Loi2"] @ViewData["Loi6"]</span>
+                        @*@Html.TextBox("DienThoai", "", new { @class = "form-control form-control-user", @placeholder = "Nhập số điện thoại", @type = "tel" }) <span class="text-danger">@ViewData["Loi2"] @ViewData["Loi6"] </span>*@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.TextBox("TenDangNhap", "", new { @class = "form-control form-control-user", @placeholder = "Nhập tài khoản", @type = "text" }) <span class="text-danger">@ViewData["Loi3"] @ViewData["Loi8"] </span>
+                    <input id="tenDangNhap" name="TenDangNhap" class="form-control form-control-user" placeholder="Nhập tài khoản" type="text" /><span class="text-danger">@ViewData["Loi3"] @ViewData["Loi8"]</span>
+                    @*@Html.TextBox("TenDangNhap", "", new { @class = "form-control form-control-user", @placeholder = "Nhập tài khoản", @type = "text" }) <span class="text-danger">@ViewData["Loi3"] @ViewData["Loi8"] </span>*@
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                        @Html.TextBox("MatKhau", "", new { @class = "form-control form-control-user", @placeholder = "Nhập mật khẩu", @type = "password" }) <span class="text-danger">@ViewData["Loi4"] </span>
+                        <input id="matKhau" name="MatKhau" class="form-control form-control-user" placeholder="Nhập mật khẩu" type="password" /><span class="text-danger">@ViewData["Loi4"]</span>
+                        @*@Html.TextBox("MatKhau", "", new { @class = "form-control form-control-user", @placeholder = "Nhập mật khẩu", @type = "password" }) <span class="text-danger">@ViewData["Loi4"] </span>*@
                     </div>
                     <div class="col-sm-6">
-                        @Html.TextBox("ReMatKhau", "", new { @class = "form-control form-control-user", @placeholder = "Nhập lại mật khẩu", @type = "password" }) <span class="text-danger">@ViewData["Loi5"] @ViewData["Loi7"] </span>
+                        <input id="reMatKhau" name="ReMatKhau" class="form-control form-control-user" placeholder="Nhập lại mậy khẩu" type="password" /><span class="text-danger">@ViewData["Loi5"] @ViewData["Loi7"]</span>
+                       @* @Html.TextBox("ReMatKhau", "", new { @class = "form-control form-control-user", @placeholder = "Nhập lại mật khẩu", @type = "password" }) <span class="text-danger">@ViewData["Loi5"] @ViewData["Loi7"] </span>*@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.TextBox("DiaChi", "", new { @class = "form-control form-control-user", @placeholder = "Nhập địa chỉ", @type = "text" })
+                    <input id="diaChi" name="DiaChi" class="form-control form-control-user" placeholder="Nhập địa chỉ" type="text" />
+                    @*@Html.TextBox("DiaChi", "", new { @class = "form-control form-control-user", @placeholder = "Nhập địa chỉ", @type = "text" })*@
                 </div>
-                <button style="height:40px; border-radius:15px" type="submit" class="btn btn-primary btn-user btn-block">Đăng kí
+                <button style="height:40px; border-radius:15px" type="submit" id="btnDangKi" class="btn btn-primary btn-user btn-block">Đăng kí
                     </button> 
             </form>
             <hr>
                 <div class="text-center">
-                    <a class="small" href="forgot-password.html">Quên mật khẩu?</a>
-                </div>
-                <div class="text-center">
-                    <a class="small" href="login.html">Đã có tài khoản? Đăng nhập!</a>
+                    <a class="small" href="@Url.Action("dangNhap","NguoiDung")">Đã có tài khoản? Đăng nhập!</a>
                 </div>
         </div>
     </div>
 </div>
 }
 }
-
-
 

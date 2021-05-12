@@ -61,7 +61,7 @@
 
         </div>
         <br />
-        <center><button class="btn btn-primary" disabled="disabled" id="btn">Đồng Ý Đặt Hàng</button></center>
+        <center><button class="btn btn-primary" disabled="disabled" id="btnDongY">Đồng Ý Đặt Hàng</button></center>
         
 
     }
@@ -120,10 +120,10 @@
     document.getElementById('datHang').addEventListener('input', function () {
         if (tenKhachHang.value.trim().length > 0 && is_phonenumber(soDienThoai.value.trim())
             && diaChi.value.trim().length >= 30) {
-            document.getElementById('btn').removeAttribute('disabled');
+            document.getElementById('btnDongY').removeAttribute('disabled');
         }
         else {
-            document.getElementById('btn').setAttribute('disabled', 'disabled');
+            document.getElementById('btnDongY').setAttribute('disabled', 'disabled');
         }
     }
     )

@@ -41,11 +41,11 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             {
                 ViewData["Loi2"] = "Số điện thoại không được bỏ trống";
             }
-            if (string.IsNullOrEmpty(tenDangNhap.Trim()) || kiemTraDL.isTextContainSPace(tenDangNhap.Trim())==false || (tenDangNhap.Trim().Length <5 && tenDangNhap.Trim().Length >30))
+            if (string.IsNullOrEmpty(tenDangNhap.Trim()) || kiemTraDL.isTextContainSPace(tenDangNhap.Trim())==false || (tenDangNhap.Trim().Length <5 || tenDangNhap.Trim().Length >30))
             {
                 ViewData["Loi3"] = "Tên đăng nhập từ 5 đến 30 kí tự, không bao gồm khoảng trắng";
             }
-            if(string.IsNullOrEmpty(matKhau.Trim()) || kiemTraDL.isTextContainSPace(matKhau.Trim())== false ||  (matKhau.Trim().Length < 5 && matKhau.Trim().Length > 30))
+            if(string.IsNullOrEmpty(matKhau.Trim()) || kiemTraDL.isTextContainSPace(matKhau.Trim())== false ||  (matKhau.Trim().Length < 5 || matKhau.Trim().Length > 30))
             {
                 ViewData["Loi4"] = "Mật khẩu từ 5 đến 30 kí tự, không bao gồm khoảng trắng";
             }
@@ -54,7 +54,8 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
                 ViewData["Loi5"] = "Nhập lại mật khẩu";
             }
             if (!string.IsNullOrEmpty(tenKH.Trim()) && !string.IsNullOrEmpty(email.Trim()) &&!string.IsNullOrEmpty(soDienThoai.Trim()) && !string.IsNullOrEmpty(tenDangNhap.Trim()) &&
-                !string.IsNullOrEmpty(matKhau.Trim()) && !string.IsNullOrEmpty(reMatKHau.Trim()))
+                !string.IsNullOrEmpty(matKhau.Trim()) && !string.IsNullOrEmpty(reMatKHau.Trim()) && kiemTraDL.isTextContainSPace(tenDangNhap.Trim()) && ((tenDangNhap.Trim().Length >= 5 && tenDangNhap.Trim().Length <= 30))
+                && kiemTraDL.isTextContainSPace(matKhau.Trim()) && ((matKhau.Trim().Length >= 5 && matKhau.Trim().Length <=30 )))
             {
                 var kiemTra = db.KhachHangs.Count(m => m.tenDangNhap == tenDangNhap);
                 if (kiemTra == 0)

@@ -162,7 +162,7 @@
             </div>
             <div class="mt-3 d-flex">
                 <div style="width:50%">
-                    <a href="@Url.Action("themSPVaoGioHang", "GioHang", new { @maSP=Model.maSanPham, @strUrl=Request.Url.ToString()})"><button class="btn btn-primary" style="height:45px;margin-left:25px; width:90%; font-weight:bold" type="submit">MUA NGAY</button></a>
+                    <a id="btnMuaNgay" href="@Url.Action("themSPVaoGioHang", "GioHang", new { @maSP=Model.maSanPham, @strUrl=Request.Url.ToString()})"><button class="btn btn-primary" style="height:45px;margin-left:25px; width:90%; font-weight:bold" type="submit">MUA NGAY</button></a>
                 </div>
                 <div style="width:50%">
                     <a href="@Url.Action("loadSanPhamDienThoai","SanPham")"><button class="btn btn-primary" style="height:45px; width:90%; font-weight:bold; float:right; margin-right:25px" type="submit">MUA TIẾP</button></a>

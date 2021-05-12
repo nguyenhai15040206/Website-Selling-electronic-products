@@ -44,7 +44,7 @@ else
             <div style="width:30%">
                 @if (Session["TaiKhoan"] != null)
                 {
-                    <input type="button" class="form-control" value="Tiến hành đặt hàng" data-toggle="modal" data-target=".bs-example-modal-lg">
+                    <input id="btnHoanTatDH" type="button" class="form-control" value="Tiến hành đặt hàng" data-toggle="modal" data-target=".bs-example-modal-lg">
                     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="my">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -66,7 +66,7 @@ else
                 }
                 else
                 {
-                    <a href="@Url.Action("dangNhap", "NguoiDung")" style="text-decoration:none"><input type="button" class="form-control" value="Tiến hành đăng nhập để đặt hàng"></a>
+                    <a  href="@Url.Action("dangNhap", "NguoiDung")" style="text-decoration:none"><input id="btnDangNhap" type="button" class="form-control" value="Tiến hành đăng nhập để đặt hàng"></a>
                 }
             </div>
         </div>
