@@ -113,7 +113,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             GioHang sp = listGioHang.Single(m => m.maSanPham == maSP);
             if (sp != null)
             {
-                sp.soLuong = int.Parse(f["txtSoLuong"].ToString());
+                sp.soLuong = int.Parse(f["txtSoLuong"].ToString()); 
             }
             return RedirectToAction("trangGioHang", "GioHang");
         }

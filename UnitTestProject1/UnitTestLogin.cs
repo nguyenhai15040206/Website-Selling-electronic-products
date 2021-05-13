@@ -20,7 +20,7 @@ namespace UnitTestProject1
 
         // Đúng
         [TestMethod]
-        public void TestMethod_Login1()
+        public void TestMethod_TC()
         {
             driver.FindElement(By.Id("TenDangNhap")).SendKeys("hainguyen");
             Thread.Sleep(1500);
@@ -32,7 +32,7 @@ namespace UnitTestProject1
 
         // test tên đăng nhập và mật khẩu không được bỏ trống
         [TestMethod]
-        public void TestMethod_Login4()
+        public void TestMethod_NULL()
         {
             driver.FindElement(By.Id("TenDangNhap")).SendKeys("");
             Thread.Sleep(1500);
@@ -45,7 +45,7 @@ namespace UnitTestProject1
 
         // test tên đăng nhập không được bỏ trống
         [TestMethod]
-        public void TestMethod_Login2()
+        public void TestMethod_UserName()
         {
             driver.FindElement(By.Id("TenDangNhap")).SendKeys("");
             Thread.Sleep(1500);
@@ -58,7 +58,7 @@ namespace UnitTestProject1
 
         // test mật khẩu không được bỏ trống
         [TestMethod]
-        public void TestMethod_Login3()
+        public void TestMethod_Pass()
         {
             driver.FindElement(By.Id("TenDangNhap")).SendKeys("hainguyen");
             Thread.Sleep(1500);
@@ -71,7 +71,7 @@ namespace UnitTestProject1
 
         // sai tên đăng nhập
         [TestMethod]
-        public void TestMethod_Login5()
+        public void TestMethod_Name1()
         {
             driver.FindElement(By.Id("TenDangNhap")).SendKeys("hainguyen1");
             Thread.Sleep(1500);
@@ -84,7 +84,7 @@ namespace UnitTestProject1
 
         // sai mật khẩu
         [TestMethod]
-        public void TestMethod_Login6()
+        public void TestMethod_Pass1()
         {
             driver.FindElement(By.Id("TenDangNhap")).SendKeys("hainguyen");
             Thread.Sleep(1500);

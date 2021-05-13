@@ -56,12 +56,15 @@
                             <img class="card-img-top" src="../Images/SanPhams/@item.hinhMinhHoa" style="height:220px; width:100%" />
                             <div class="card" style="border:none; margin-top:5px">
                                 <h5 class="card-text text-dark" style="font-size:15px; font-weight:bold">@item.tenSanPham</h5>
-                                <div class="d-flex" style="margin-top:-5px;">
+                                <div class="d-flex" style="margin-top:0px;">
                                     <div style="width:65%">
                                         <span class="text-danger" style="">@string.Format("{0:0,0}", (item.donGia - item.giamGia))<span style="text-decoration-line:underline">đ</span></span>
                                     </div>
                                     <div style="width:35%">
+                                        @if (item.giamGia > 0)
+                                        {
                                         <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                                        }
                                     </div>
                                 </div>
                                 @{

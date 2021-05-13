@@ -1,8 +1,7 @@
 ﻿@{
-    ViewBag.Title = "loadSanPhamLaptop";
+    ViewBag.Title = "sanPhamTheoDanhMucLaptop";
     Layout = "~/Views/Shared/QLSPLayout.cshtml";
 }
-
 @using QLSanPhamDienTu_WebApplication.Models;
 @model List<SanPham>
 
@@ -54,7 +53,7 @@
                                     <div style="width:35%">
                                         @if (item.giamGia > 0)
                                         {
-                                        <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                                            <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
                                         }
                                     </div>
                                 </div>
@@ -83,11 +82,11 @@
                                             @if (mota[1].Trim().Length > 13)
                                             {
                                                 string b = mota[1].Trim().Substring(5, 8);
-                                                <p class="text-dark" style="font-size:13px"><i class="fas fa-server"></i>  @b.Trim().Substring(0,7)</p>
+                                                <p class="text-dark" style="font-size:13px"><i class="fas fa-server"></i>  @b.Trim().Substring(0, 7)</p>
                                             }
                                             else
                                             {
-                                                <p class="text-dark" style="font-size:13px"><i class="fas fa-server"></i>  @mota[1].ToString().Trim().Substring(0,6)</p>
+                                                <p class="text-dark" style="font-size:13px"><i class="fas fa-server"></i>  @mota[1].ToString().Trim().Substring(0, 6)</p>
                                             }
 
                                         </div>
@@ -116,3 +115,4 @@
         </div>
     </div>
 </body>
+

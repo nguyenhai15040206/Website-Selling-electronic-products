@@ -18,11 +18,11 @@ namespace UnitTestProject1
             driver.Navigate().GoToUrl("http://localhost:49812/");
         }
 
-        //SAI tên đăng nhập
+        //SAI tên để trống
 
         //khi chưa đăng nhập
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethod_Name()
         {
             driver.FindElement(By.Id("xemChiTiet")).Click();
             Thread.Sleep(1500);
@@ -53,7 +53,7 @@ namespace UnitTestProject1
 
         //khi chưa đăng nhập
         [TestMethod]
-        public void TestMethod3()
+        public void TestMethod_Phone()
         {
             driver.FindElement(By.Id("xemChiTiet")).Click();
             Thread.Sleep(1500);
@@ -76,14 +76,44 @@ namespace UnitTestProject1
             driver.FindElement(By.Id("soDienThoai")).SendKeys("037831826N");
             Thread.Sleep(5000);
             driver.FindElement(By.Id("diaChi")).SendKeys("11/29 Dương Đức Hiền, Phạm Ngọc Thảo, Tân Phú, HCM");         
-            //Thread.Sleep(5000);
+            Thread.Sleep(5000);
+        }
+
+        //SAI để trống sđt
+
+        //khi chưa đăng nhập
+        [TestMethod]
+        public void TestMethod_Phone1()
+        {
+            driver.FindElement(By.Id("xemChiTiet")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("btnMuaNgay")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("imgGioHang")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("btnDangNhap")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("TenDangNhap")).SendKeys("hainguyen");
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("MatKhau")).SendKeys("tanhai123");
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("btn")).Click();
+            driver.FindElement(By.Id("imgGioHang")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("btnHoanTatDH")).Click();
+            Thread.Sleep(5000);
+            driver.FindElement(By.Id("soDienThoai")).Clear();
+            driver.FindElement(By.Id("soDienThoai")).SendKeys("");
+            Thread.Sleep(5000);
+            driver.FindElement(By.Id("diaChi")).SendKeys("11/29 Dương Đức Hiền, Phạm Ngọc Thảo, Tân Phú, HCM");
+            Thread.Sleep(5000);
         }
 
         //ĐÚNG
 
         //CHƯA ĐĂNG NHẬP
         [TestMethod]
-        public void TestMethod2()
+        public void TestMethod_TC()
         {
             driver.FindElement(By.Id("xemChiTiet")).Click();
             Thread.Sleep(1500);
@@ -107,6 +137,29 @@ namespace UnitTestProject1
             driver.FindElement(By.Id("btnDongY")).Click();
             Thread.Sleep(5000);
         }
+        //sai
+
+        //ĐĂNG NHẬP KHÔNG THÀNH CÔNG
+        [TestMethod]
+        public void TestMethod_TB()
+        {
+            driver.FindElement(By.Id("xemChiTiet")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("btnMuaNgay")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("imgGioHang")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("btnDangNhap")).Click();
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("TenDangNhap")).SendKeys("hainguyen");
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("MatKhau")).SendKeys("tanhai1234");
+            Thread.Sleep(1500);
+            driver.FindElement(By.Id("btn")).Click();
+            Thread.Sleep(5000);
+        }
+
+
         [TestCleanup]
         public void Closed()
         {

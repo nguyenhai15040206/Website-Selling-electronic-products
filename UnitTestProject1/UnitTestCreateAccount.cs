@@ -20,7 +20,7 @@ namespace UnitTestProject1
 
         // Đúng
         [TestMethod]
-        public void TestMethod_Name1()
+        public void TestMethod_TC()
         {
             driver.FindElement(By.Id("tenKhachHang")).SendKeys("Thái Trần Kiều Diễm");
             Thread.Sleep(1500);

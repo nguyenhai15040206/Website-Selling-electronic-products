@@ -26,68 +26,81 @@
                         <tr>
                             <td class="text-muted" style="font-size:11px; font-weight:100; width:100px">Họ tên</td>
                             <td>
-                                @Html.TextBox("tenKhachHang", kh.tenKhachHang, new { @class = "form-control", @type = "text", @style = "width:400px; height: 30px; font-size:12px;" })
+                                @Html.TextBox("tenKhachHang", kh.tenKhachHang, new { @class = "form-control", @type = "text",@id="nameTTTK", @style = "width:400px; height: 30px; font-size:12px;" })
                             </td>
                         </tr>
                         <tr>
                             <td class="text-muted" style="font-size:11px; font-weight:100">Số điện thoại</td>
                             <td>
-                                @Html.TextBox("soDienThoai", kh.soDienThoai, new { @class = "form-control", @type = "text", @style = "width:400px; height: 30px; font-size:12px;" })
+                                @Html.TextBox("soDienThoai", kh.soDienThoai, new { @class = "form-control", @type = "text",@id="phone", @style = "width:400px; height: 30px; font-size:12px;" })
                             </td>
                         </tr>
                         <tr>
                             <td class="text-muted" style="font-size:11px; font-weight:100">Email</td>
                             <td>
-                                @Html.TextBox("email", kh.email, new { @class = "form-control", @type = "text", @style = "width:400px; height: 30px; font-size:12px;" })
+                                @Html.TextBox("email", kh.email, new { @class = "form-control", @type ="email",@id="email", @style = "width:400px; height: 30px; font-size:12px;" })
                             </td>
                         </tr>
                         <tr>
                             <td class="text-muted" style="font-size:11px; font-weight:100">Địa chỉ</td>
                             <td>
-                                @Html.TextBox("diaChi", kh.diaChi, new { @class = "form-control", @type = "text", @style = "width:400px; height: 30px; font-size:12px;" })
+                                @Html.TextBox("diaChi", kh.diaChi, new { @class = "form-control", @type = "text",@id="address", @style = "width:400px; height: 30px; font-size:12px;" })
                             </td>
                         </tr>
 
                     </table>
                     <div class="form-check" style="margin-left:110px;margin-top:-20px">
                         <label class="form-check-label" style="">
-                            <input type="checkbox" name="checkBox" class="form-check-input" data-target="#updatePass" data-toggle="collapse" value="">Thay đổi mật khẩu
+                            <input type="checkbox" name="checkBox"  id="action" class="form-check-input" data-target="#updatePass" data-toggle="collapse" value="">Thay đổi mật khẩu
                         </label>
                     </div>
                     <div id="updatePass" class="collapse">
                         <table class="table">
                             <tr class="non-border">
-                                <td class="text-muted" style="font-size:11px; font-weight:100;width:100px">Mật khẩu</td>
+                                <td class="text-muted" style="font-size:11px; font-weight:100;width:100px">Mật khẩu cũ</td>
                                 <td>
-                                    @Html.TextBox("matKhau", kh.matKhau, new { @class = "form-control", @type = "Password", @style = "width:400px; height: 30px; font-size:12px;" })
+                                    @Html.TextBox("matKhau", "", new { @class = "form-control", @type = "Password",@id="oldPass", @style = "width:400px; height: 30px; font-size:12px;" })
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-muted" style="font-size:11px; font-weight:100">Mật khẩu mới</td>
                                 <td>
-                                    @Html.TextBox("reMatKhau", "", new { @class = "form-control", @type = "Password", @style = "width:400px; height: 30px; font-size:12px;" })
+                                    @Html.TextBox("reMatKhau", "", new { @class = "form-control", @type = "Password",@id="newPass", @style = "width:400px; height: 30px; font-size:12px;" })
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-muted" style="font-size:11px; font-weight:100">Nhập lại</td>
                                 <td>
-                                    @Html.TextBox("nhapLai", "", new { @class = "form-control", @type = "Password", @style = "width:400px; height: 30px; font-size:12px;" })
+                                    @Html.TextBox("nhapLai", "", new { @class = "form-control", @type = "Password",@id="reNewPass", @style = "width:400px; height: 30px; font-size:12px;" })
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div style="margin-left:130px; margin-top:-15px; margin-bottom:20px">
-                    <input class="btn btn-warning" style="width:150px;height:30px;padding:0px;font-size:12px" type="submit" value="Cập nhật" />
+                    <input class="btn btn-warning" style="width:150px;height:30px;padding:0px;font-size:12px" type="submit" id="btnCN" value="Cập nhật" />
                 </div>
             }
         
     }
-    <div>
-        <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["thongBao"]</span>
-        <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi1"]</span>
-        <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi2"]</span>
-        <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi3"]</span>
-    </div>
+<div>
+    <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["thongBao"]</span>
+    <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi1"]</span>
+    <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi2"]</span>
+    <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi3"]</span>
+    <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi4"]</span>
+    <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi5"]</span>
+    <span style="color:red; margin-left:10px; font-size:small; font-weight:500">@ViewData["Loi6"]</span>
 </div>
+</div>
+<script>
+    document.getElementById('action').onclick = function (e) {
+        if (this.checked) {
+            document.getElementById('action').value = "on";
+        }
+        else {
+            document.getElementById('action').value = "";
+        }
+    }
+</script>
 

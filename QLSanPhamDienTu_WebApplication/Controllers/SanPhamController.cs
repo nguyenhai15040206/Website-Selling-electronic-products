@@ -50,7 +50,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         public ActionResult loadSanPhamLaptop()
         {
             ViewBag.TongSPLaptop = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Laptop").Count();
-            var listSPLaptop = db.SanPhams.Take(12).Where(m => m.DanhMuc.ghiChu == "Laptop").OrderBy(m => m.tenSanPham).ToList();
+            var listSPLaptop = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Laptop").OrderByDescending(m =>m.giamGia).Take(12).OrderByDescending(m=>m.donGia).ToList();
             return View(listSPLaptop);
         }
 
@@ -59,7 +59,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             SanPham sp = db.SanPhams.Single(m => m.maSanPham == maSP);
             if (sp == null)
             {
-                return RedirectToAction("loadSanPhamLaptop", "SanPham");
+                return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
             }
             else
                 return View(sp);
@@ -70,12 +70,37 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             var sp = db.SanPhams.Where(m => m.maDanhMuc == maDanhMuc).ToList();
             if(sp == null)
             {
-
+                return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
             }    
             return View(sp);
         }
         #endregion
 
+        #region sản phẩm phụ kiện
+        public ActionResult loadSanPhamPhuKien()
+        {
+            var listSanPham = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "PhuKien").OrderByDescending(m=>m.donGia).Take(12).ToList();
+            ViewBag.TongSPPhuKien = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "PhuKien").ToList().Count();
+            if (listSanPham.Count==0)
+            {
+                return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
+            }    
+            return View(listSanPham);
+        }
+        #endregion
 
+
+        #region sản phẩm apple
+        public ActionResult loadSanPhamApple()
+        {
+            var listSanPham = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Apple").OrderByDescending(m => m.donGia).Take(12).ToList();
+            ViewBag.TongSPPhuKien = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Apple").ToList().Count();
+            if (listSanPham.Count == 0)
+            {
+                return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
+            }
+            return View(listSanPham);
+        }
+        #endregion
     }
 }

@@ -127,6 +127,7 @@
     <Compile Include="Controllers\NhaSanXuatController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
     <Compile Include="Controllers\TimKiemController.cs" />
+    <Compile Include="Controllers\TinTucController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -259,9 +260,6 @@
     <Content Include="Views\SanPham\chiTietSanPhamDienThoai.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\SanPham\loadSanPhamLaptop.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\SanPham\chiTietSanPhamLaptop.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +324,10 @@
     </None>
     <Content Include="Views\HttpNotFound\DanhSachSanPhamRong.cshtml" />
     <Content Include="Views\TimKiem\TimKiemSanPham.cshtml" />
+    <Content Include="Views\SanPham\loadSanPhamLaptop.cshtml" />
+    <Content Include="Views\SanPham\sanPhamTheoDanhMucLaptop.cshtml" />
+    <Content Include="Views\SanPham\loadSanPhamPhuKien.cshtml" />
+    <Content Include="Views\TinTuc\loadTinTucAPI.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
