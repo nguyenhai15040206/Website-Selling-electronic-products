@@ -1,0 +1,29 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using QuanLySanPhamDIenTuAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace QuanLySanPhamDIenTuAPI.Controller
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BannerController : ControllerBase
+    {
+        QL_SanPhamContext db = new QL_SanPhamContext();
+
+        // load tất cả sản phẩm
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var banner = db.Banner.ToList();
+            if (banner.Count == 0)
+            {
+                return NotFound();
+            }
+            return new ObjectResult(banner);
+        }
+    }
+}
