@@ -54,6 +54,7 @@ namespace QuanLySanPhamDIenTuAPI.Controller
             }
             catch(Exception ex)
             {
+                Console.WriteLine("" + ex);
                 return BadRequest();
             }
         }

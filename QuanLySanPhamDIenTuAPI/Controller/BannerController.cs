@@ -14,16 +14,17 @@ namespace QuanLySanPhamDIenTuAPI.Controller
     {
         QL_SanPhamContext db = new QL_SanPhamContext();
 
-        // load tất cả sản phẩm
+        // load tất cả Banner
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var banner = db.Banner.ToList();
-            if (banner.Count == 0)
+            if (banner == null)
             {
                 return NotFound();
             }
             return new ObjectResult(banner);
         }
+
     }
 }
