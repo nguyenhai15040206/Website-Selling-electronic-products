@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using QuanLySanPhamDIenTuAPI.Models;
 
-namespace QuanLySanPhamDIenTuAPI.Controller
+namespace QuanLySanPhamDIenTuAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Home/Introduct/[controller]")]
     [ApiController]
     public class DanhMucController : ControllerBase
     {

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QuanLySanPhamDIenTuAPI.Controller
+namespace QuanLySanPhamDIenTuAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Home/Introduct/[controller]")]
     [ApiController]
     public class BannerController : ControllerBase
     {

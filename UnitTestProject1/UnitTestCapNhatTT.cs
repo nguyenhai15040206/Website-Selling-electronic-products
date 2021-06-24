@@ -17,7 +17,7 @@ namespace UnitTestProject1
         {
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/dangNhap");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/dangNhap");
         }
 
         //Sai 
@@ -32,7 +32,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             driver.FindElement(By.Id("nameTTTK")).Clear();
             driver.FindElement(By.Id("nameTTTK")).SendKeys("");
             Thread.Sleep(1500);
@@ -53,7 +53,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             driver.FindElement(By.Id("phone")).Clear();
             driver.FindElement(By.Id("phone")).SendKeys("");
             Thread.Sleep(1500);
@@ -73,7 +73,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             driver.FindElement(By.Id("phone")).Clear();
             driver.FindElement(By.Id("phone")).SendKeys("037831826d");
             Thread.Sleep(1500);
@@ -94,7 +94,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             driver.FindElement(By.Id("phone")).Clear();
             driver.FindElement(By.Id("phone")).SendKeys("3783182689");
             Thread.Sleep(1500);
@@ -114,7 +114,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             driver.FindElement(By.Id("phone")).Clear();
             driver.FindElement(By.Id("phone")).SendKeys("01783182689");
             Thread.Sleep(1500);
@@ -134,7 +134,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             driver.FindElement(By.Id("email")).Clear();
             driver.FindElement(By.Id("email")).SendKeys("");
             Thread.Sleep(1500);
@@ -156,7 +156,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             driver.FindElement(By.Id("email")).Clear();
             driver.FindElement(By.Id("email")).SendKeys("thaikieudiemgmal.com");
             Thread.Sleep(1500);
@@ -177,7 +177,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             driver.FindElement(By.Id("address")).Clear();
             driver.FindElement(By.Id("address")).SendKeys("");
             Thread.Sleep(1500);
@@ -198,7 +198,7 @@ namespace UnitTestProject1
             Thread.Sleep(1500);
             driver.FindElement(By.Id("btn")).Click();
             Thread.Sleep(1500);
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/thongTinTaiKhoan?maKhachHang=2");
             Thread.Sleep(1500);
             driver.FindElement(By.Id("phone")).Clear();
             Thread.Sleep(1000);

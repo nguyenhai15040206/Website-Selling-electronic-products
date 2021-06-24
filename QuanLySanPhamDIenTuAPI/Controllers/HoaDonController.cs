@@ -6,23 +6,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using QuanLySanPhamDIenTuAPI.Models;
 
-namespace QuanLySanPhamDIenTuAPI.Controller
+namespace QuanLySanPhamDIenTuAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Home/Introduct/[controller]")]
     [ApiController]
-    public class CTHoaDonController : ControllerBase
+    public class HoaDonController : ControllerBase
     {
         QL_SanPhamContext db = new QL_SanPhamContext();
-
         [HttpGet("{maKhachHang}")]
         public async Task<IActionResult> Get(int maKhachHang)
         {
-            var ctHoaDon = db.CthoaDon.Where(m => m.MaHoaDonNavigation.MaKhachHang== maKhachHang).ToList();
-            if(ctHoaDon.Count==0)
+            var hoaDon = db.HoaDon.Where(m=>m.MaKhachHangNavigation.MaKhachHang== maKhachHang).ToList();
+            if(hoaDon.Count==0)
             {
-                NotFound();
+                return NotFound();
             }
-            return new ObjectResult(ctHoaDon);
+            return new ObjectResult(hoaDon);
         }
     }
 }

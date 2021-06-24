@@ -8,10 +8,9 @@ using QuanLySanPhamDIenTuAPI.Models;
 using System.Net;
 using System.Net.Http;
 using Microsoft.EntityFrameworkCore;
-
-namespace QuanLySanPhamDIenTuAPI.Controller
+namespace QuanLySanPhamDIenTuAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Home/Introduct/[controller]")]
     [ApiController]
     public class KhachHangController : ControllerBase
     {

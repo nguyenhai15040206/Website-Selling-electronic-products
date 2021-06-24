@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLSanPhamDienTu_WebApplicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProjectWebsite", "UnitTestProject1\UnitTestProjectWebsite.csproj", "{F0FCBF13-E6A8-4FCB-B169-8FB5A6962DDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuanLySanPhamDIenTuAPI", "QuanLySanPhamDIenTuAPI\QuanLySanPhamDIenTuAPI.csproj", "{FBB79402-2475-4200-9EC4-F726BEC0F564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuanLySanPhamDIenTuAPI", "QuanLySanPhamDIenTuAPI\QuanLySanPhamDIenTuAPI.csproj", "{FBB79402-2475-4200-9EC4-F726BEC0F564}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

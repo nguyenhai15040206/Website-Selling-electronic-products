@@ -17,6 +17,7 @@ namespace QuanLySanPhamDIenTuAPI.Models
         public string TenSanPham { get; set; }
         public int? SoLuong { get; set; }
         public decimal? DonGia { get; set; }
+        public decimal? DonGiaNhap { get; set; }
         public string MoTa { get; set; }
         public string MoTaChiTiet { get; set; }
         public string KhuyenMai { get; set; }

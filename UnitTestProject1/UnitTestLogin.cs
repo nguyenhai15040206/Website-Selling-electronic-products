@@ -15,7 +15,7 @@ namespace UnitTestProject1
         {
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl("http://localhost:49812/NguoiDung/dangNhap");
+            driver.Navigate().GoToUrl("http://localhost:8080/NguoiDung/dangNhap");
         }
 
         // Đúng

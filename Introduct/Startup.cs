@@ -10,13 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
-using Microsoft.AspNetCore.StaticFiles;
 
-namespace QuanLySanPhamDIenTuAPI
+namespace Introduct
 {
     public class Startup
     {
@@ -25,15 +20,12 @@ namespace QuanLySanPhamDIenTuAPI
             Configuration = configuration;
         }
 
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddRazorPages();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,24 +46,6 @@ namespace QuanLySanPhamDIenTuAPI
             {
                 endpoints.MapControllers();
             });
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
-
-            app.UseHttpsRedirection();
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-            Path.Combine(env.ContentRootPath, "Aloo")),
-                RequestPath = "/StaticFiles"
-            });
-        }
-
-        private void ConfigureRoutes(IRouteBuilder routeBuilder)
-        {
-            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Introduct}");
         }
     }
 }
