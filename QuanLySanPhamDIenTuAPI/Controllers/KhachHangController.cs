@@ -8,6 +8,7 @@ using QuanLySanPhamDIenTuAPI.Models;
 using System.Net;
 using System.Net.Http;
 using Microsoft.EntityFrameworkCore;
+using QLSanPhamDienTu_WebApplication;
 namespace QuanLySanPhamDIenTuAPI.Controllers
 {
     [Route("Home/Introduct/[controller]")]
