@@ -23,6 +23,16 @@ namespace QuanLySanPhamDIenTuAPI.Controllers
             return db.KhachHang.ToList();
         }
 
+        [HttpGet("{maKhachHang}")]
+        public KhachHang Get(int maKhachHang)
+        {
+            var kh = db.KhachHang.Where(m => m.MaKhachHang == maKhachHang).SingleOrDefault();
+            if(kh==null)
+            {
+                NotFound();
+            }    
+            return kh;
+        }
         [HttpGet("{tenDangNhap}/{matKhau}")]
         public async  Task<IActionResult> Get(string tenDangNhap, string matKhau)
         {

@@ -58,15 +58,8 @@ namespace QuanLySanPhamDIenTuAPI
             {
                 endpoints.MapRazorPages();
             });
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-            app.UseHttpsRedirection();
-
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-            Path.Combine(env.ContentRootPath, "Aloo")),
-                RequestPath = "/StaticFiles"
-            });
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
