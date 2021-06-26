@@ -8,12 +8,11 @@ using QuanLySanPhamDIenTuAPI.Models;
 
 namespace QuanLySanPhamDIenTuAPI.Controllers
 {
-    [Route("Home/Introduct/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class SanPhamController : ControllerBase
     {
         QL_SanPhamContext db = new QL_SanPhamContext();
-
 
         public List<NewSanPham> getSanPhamPaginationList(int page = 1, int limit = 10)
         {
@@ -55,14 +54,14 @@ namespace QuanLySanPhamDIenTuAPI.Controllers
         }
 
         [HttpGet("getSanPhamPaginationList")]
-        public ActionResult<SanPham> GET(int page, int limit)
+        public async Task<IActionResult> GET(int page, int limit)
         {
             var rs = getSanPhamPaginationList(page, limit);
             if (rs == null)
             {
-                return NotFound(rs);
+                return NotFound();
             }
-            return Ok(rs);
+            return new ObjectResult(rs);
         }
         // load sản phẩm theo mã sản phẩm
         [HttpGet("{maSanPham}")]
