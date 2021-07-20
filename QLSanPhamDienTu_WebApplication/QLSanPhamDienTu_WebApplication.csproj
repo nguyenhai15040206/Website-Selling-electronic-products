@@ -136,6 +136,7 @@
     <Compile Include="Models\DonMua.cs" />
     <Compile Include="Models\GioHang.cs" />
     <Compile Include="Models\KiemTraDuLieu.cs" />
+    <Compile Include="Models\NewSanPham.cs" />
     <Compile Include="Models\QLSanPhamDienTu.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -331,6 +332,8 @@
     <Content Include="Views\SanPham\loadSanPhamPhuKien.cshtml" />
     <Content Include="Views\TinTuc\loadTinTucAPI.cshtml" />
     <Content Include="Views\TinTuc\Index.cshtml" />
+    <Content Include="Views\SanPham\chiTietSanPhamPhuKien.cshtml" />
+    <Content Include="Views\DanhMucSanPham\LogoDanhMucPhuKien.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

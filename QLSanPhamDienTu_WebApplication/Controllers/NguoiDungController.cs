@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using QLSanPhamDienTu_WebApplication.Models;
@@ -13,6 +14,12 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         // GET: /NguoiDung/
         QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
         KiemTraDuLieu kiemTraDL = new KiemTraDuLieu();
+        public static HttpClient client;
+        public NguoiDungController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("http://192.168.1.3:5000/Home/Introduct/");
+        }
 
         [HttpGet]
         public ActionResult dangKy()
@@ -71,9 +78,14 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
                             kh.diaChi = diaChi;
                             kh.tenDangNhap = tenDangNhap;
                             kh.matKhau = matKhau;
-                            db.KhachHangs.InsertOnSubmit(kh);
-                            db.SubmitChanges();
-                            return RedirectToAction("dangNhap","NguoiDung");
+                            //db.KhachHangs.InsertOnSubmit(kh);
+                            var postKH = client.PostAsJsonAsync<KhachHang>("KhachHang", kh);
+                            postKH.Wait();
+                            var rs = postKH.Result;
+                            if(rs.IsSuccessStatusCode)
+                            {
+                                return RedirectToAction("dangNhap", "NguoiDung");
+                            }    
                         }
                         else
                         {
@@ -114,17 +126,28 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             }
             if (!string.IsNullOrEmpty(tenDangNhap) && !string.IsNullOrEmpty(matKhau))
             {
-                KhachHang kh = db.KhachHangs.SingleOrDefault(m => m.tenDangNhap.Trim() == tenDangNhap.Trim() && m.matKhau.Trim() == matKhau.Trim());
-                if (kh != null)
+                //KhachHang kh = db.KhachHangs.SingleOrDefault(m => m.tenDangNhap.Trim() == tenDangNhap.Trim() && m.matKhau.Trim() == matKhau.Trim());
+                KhachHang kh = null;
+                client.DefaultRequestHeaders.Accept.Clear();
+
+                var responseTask = client.GetAsync("KhachHang/" + tenDangNhap+"/"+matKhau);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
                 {
-                    Session["TaiKhoan"] = kh;
-                    return RedirectToAction("loadSanPhamDienThoai", "SanPham");
+                    var readObj = result.Content.ReadAsAsync<KhachHang>();
+                    readObj.Wait();
+                    kh = readObj.Result;
+                    if (kh != null)
+                    {
+                        Session["TaiKhoan"] = kh;
+                        return RedirectToAction("loadSanPhamDienThoai", "SanPham");
+                    }
                 }
                 else
                 {
-                    ViewData["Loi3"] = "Sai tên Đăng Nhập hoặc sai Mật Khẩu, vui lòng đăng nhập lại!";
-                }
-                    
+                    ModelState.AddModelError(string.Empty, "Sai tên Đăng Nhập hoặc sai Mật Khẩu, vui lòng đăng nhập lại!");
+                } 
             }
             return View();
         }
@@ -141,83 +164,123 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         [HttpGet]
         public ActionResult thongTinTaiKhoan(int maKhachHang)
         {
-            var kh = db.KhachHangs.Where(m => m.maKhachHang == maKhachHang).FirstOrDefault();
+            //var kh = db.KhachHangs.Where(m => m.maKhachHang == maKhachHang).FirstOrDefault();
+            KhachHang kh = null;
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            var responseTask = client.GetAsync("KhachHang/"+maKhachHang);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readObj = result.Content.ReadAsAsync<KhachHang>();
+                readObj.Wait();
+                kh = readObj.Result;
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Vui lòng kiểm tra lại internet");
+            }
             return View(kh);
         }
 
         [HttpPost]
         public ActionResult thongTinTaiKhoan(int maKhachHang,string tenKhachHang, string soDienThoai, string email, string diaChi,string matKhau ,string reMatKhau, string nhapLai, string checkBox)
-        {
+       {
             string loi6 = "Cập nhật thông tin thành công!";
-            KhachHang kh = db.KhachHangs.Single(m => m.maKhachHang == maKhachHang);
-            if (ModelState.IsValid)
+            KhachHang kh = null;
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            var responseTask = client.GetAsync("KhachHang/" + maKhachHang);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
             {
-                if (string.IsNullOrEmpty(tenKhachHang) || string.IsNullOrEmpty(soDienThoai) || string.IsNullOrEmpty(email) )
+                var readObj = result.Content.ReadAsAsync<KhachHang>();
+                readObj.Wait();
+                kh = readObj.Result;
+                if (ModelState.IsValid)
                 {
-                    ViewData["Loi1"] = "Các thông tin không được để trống!";
-                }  
-                if(diaChi.Trim().Length <30)
-                {
-                    ViewData["Loi7"] = "Địa chỉ không hợp lệ!";
-                }  
-                if (!string.IsNullOrEmpty(tenKhachHang.Trim()) && !string.IsNullOrEmpty(soDienThoai.Trim()) && !string.IsNullOrEmpty(email.Trim())
-                    && !string.IsNullOrEmpty(diaChi.Trim()) && diaChi.Trim().Length >=30)
-                {
-                    
-                    if (kiemTraDL.isPhoneNumber(soDienThoai.Trim()))
+                    if (string.IsNullOrEmpty(tenKhachHang) || string.IsNullOrEmpty(soDienThoai) || string.IsNullOrEmpty(email))
                     {
-                        kh.diaChi = diaChi;
-                        kh.tenKhachHang = tenKhachHang;
-                        kh.soDienThoai = soDienThoai;
-                        kh.email = email;
-                        if (checkBox == "on")
+                        ViewData["Loi1"] = "Các thông tin không được để trống!";
+                    }
+                    if (diaChi.Trim().Length < 30)
+                    {
+                        ViewData["Loi7"] = "Địa chỉ không hợp lệ!";
+                    }
+                    if (!string.IsNullOrEmpty(tenKhachHang.Trim()) && !string.IsNullOrEmpty(soDienThoai.Trim()) && !string.IsNullOrEmpty(email.Trim())
+                        && !string.IsNullOrEmpty(diaChi.Trim()) && diaChi.Trim().Length >= 30)
+                    {
+
+                        if (kiemTraDL.isPhoneNumber(soDienThoai.Trim()))
                         {
-                            if (matKhau.Trim() != "")
+                            kh.diaChi = diaChi;
+                            kh.tenKhachHang = tenKhachHang;
+                            kh.soDienThoai = soDienThoai;
+                            kh.email = email;
+                            if (checkBox == "on")
                             {
-                                if (matKhau.Trim() == kh.matKhau)
+                                if (matKhau.Trim() != "")
                                 {
-                                    if (reMatKhau.Trim().Length >= 5 && reMatKhau.Trim().Length <= 30 && kiemTraDL.isTextContainSPace(reMatKhau.Trim()) == true)
+                                    if (kiemTraDL.MD5Hash(matKhau.Trim()) == kh.matKhau)
                                     {
-                                        if (reMatKhau.Trim() == nhapLai.Trim())
+                                        if (reMatKhau.Trim().Length >= 5 && reMatKhau.Trim().Length <= 30 && kiemTraDL.isTextContainSPace(reMatKhau.Trim()) == true)
                                         {
-                                            kh.matKhau = reMatKhau;
-                                            db.SubmitChanges();
-                                            ViewData["thongBao"] = loi6;
+                                            if (reMatKhau.Trim() == nhapLai.Trim())
+                                            {
+                                                kh.matKhau = kiemTraDL.MD5Hash(reMatKhau);
+                                                var putTask = client.PutAsJsonAsync<KhachHang>("KhachHang/" + maKhachHang, kh);
+                                                putTask.Wait();
+                                                var rs = putTask.Result;
+                                                if (rs.IsSuccessStatusCode)
+                                                {
+                                                    ViewData["thongBao"] = loi6;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ViewData["Loi3"] = "Mật khẩu không khớp!";
+                                            }
                                         }
                                         else
                                         {
-                                            ViewData["Loi3"] = "Mật khẩu không khớp!";
+                                            ViewData["Loi6"] = "Mật khẩu mới nhập từ 5 đến 30 kí tự, không bao gồm khoảng trắng!";
                                         }
                                     }
                                     else
                                     {
-                                        ViewData["Loi6"] = "Mật khẩu mới nhập từ 5 đến 30 kí tự, không bao gồm khoảng trắng!";
+                                        ViewData["Loi5"] = "Mật khẩu cũ không chính xác";
                                     }
                                 }
                                 else
                                 {
-                                    ViewData["Loi5"] = "Mật khẩu cũ không chính xác";
+                                    ViewData["Loi4"] = "Vui lòng điền mật khẩu cũ";
                                 }
                             }
                             else
                             {
-                                ViewData["Loi4"] = "Vui lòng điền mật khẩu cũ";
+                                //db.SubmitChanges();
+                                var putTask = client.PutAsJsonAsync<KhachHang>("KhachHang/"+maKhachHang,kh);
+                                putTask.Wait();
+                                var rs = putTask.Result;
+                                if(rs.IsSuccessStatusCode)
+                                {
+                                    ViewData["thongBao"] = loi6;
+                                }    
+                                
                             }
                         }
                         else
                         {
-                            db.SubmitChanges();
-                            ViewData["thongBao"] = loi6;
+
+                            ViewData["Loi2"] = "Số điện thoại không hợp lệ";
                         }
-                    }
-                    else
-                    {
 
-                        ViewData["Loi2"] = "Số điện thoại không hợp lệ";
                     }
-
                 }
             }
+            //var responseTask = client.PutAsJsonAsync<KhachHang>("KhachHang",);
             return View(kh);
         }
 

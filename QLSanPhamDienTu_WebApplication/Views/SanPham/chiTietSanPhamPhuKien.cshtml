@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "chiTietSanPhamPhuKien";
+    Layout = "~/Views/Shared/QLSPLayout.cshtml";
+}
+@model QLSanPhamDienTu_WebApplication.Models.SanPham
+<br />
+<body class="bg-light">
+    <div class="container mt-2">
+        <h5 style="font-weight:bold">@Model.tenSanPham</h5>
+        <hr />
+        <div class="d-flex">
+            <div class="card" style="width:40%;">
+                <center><img class="card-image-top" src="@Model.hinhMinhHoa" style="height:330px; width:75%;" /></center>
+                <div class="card bg-light" style="border:none; padding:5px">
+                    
+                </div>
+            </div>
+            <div class="ml-4" style="width:60%">
+                @if (@Model.giamGia > 0)
+                {
+                    <div class="d-flex" style="">
+                        <div style="width:25%">
+                            <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@Model.donGia - @Model.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                        </div>
+                        <div style="width:75%">
+                            <del><span class="text-dark " style="font-size:16px;">@string.Format("{0:0,0}", @Model.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@Model.donGia - @Model.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                }
+                <div class="card">
+                    <div class="card-header">
+                        <span class="text-dark">Nhận ngay khuyến mãi đặt biệt</span>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            if (Model.khuyenMai != null)
+                            {
+
+                                string[] khuyeMai = Model.khuyenMai.Split('|');
+                                for (int i = 0; i < khuyeMai.Length; i++)
+                                {
+                                    <p><i class="fas fa-check-circle" style="color:green"></i> @khuyeMai[i].ToString()</p>
+                                }
+                            }
+                            else
+                            {
+                                <p><i class="fas fa-check-circle" style="color:green"></i>Chưa cập nhật</p>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="card mt-2">
+                    <div class="card-header">
+                        Bảng màu
+                    </div>
+                    <div class="card-body d-flex">
+                        @{
+                            if (Model.dsHinh != null)
+                            {
+                                string[] dsHinhs = Model.dsHinh.Trim().Split(',');
+                                foreach (var item in dsHinhs)
+                                {
+                                    <img id="zum" style="width:100px; height:90px" class="img-thumbnail ml-2" src="../Images/SanPham/@item.ToString().Trim()" />
+                                }
+                            }
+                            else
+                            {
+                                <span>Chưa cập nhật</span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="mt-3 d-flex">
+                    <div style="width:50%">
+                        <a href="@Url.Action("themSPVaoGioHang", "GioHang", new { @maSP=Model.maSanPham, @strUrl=Request.Url.ToString()})"><button class="btn btn-primary" style="height:45px;margin-left:25px; width:90%; font-weight:bold" type="submit">MUA NGAY</button></a>
+                    </div>
+                    <div style="width:50%">
+                        <a href="@Url.Action("loadSanPhamLaptop","SanPham")"><button class="btn btn-primary" style="height:45px; width:90%; font-weight:bold; float:right; margin-right:25px" type="submit">MUA TIẾP</button></a>
+                    </div>
+                </div>
+                <p class="mt-2 card-text">Gọi: <a class="text-danger" style="text-decoration:none">1800-6601</a> để được tư vấn mua hàng (Miễn phí)</p>
+            </div>
+        </div>
+    </div>
+</body>

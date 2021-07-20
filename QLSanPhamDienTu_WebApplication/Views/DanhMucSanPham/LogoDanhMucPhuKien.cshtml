@@ -1,0 +1,9 @@
+﻿@using QLSanPhamDienTu_WebApplication.Models;
+@model List<DanhMuc>
+
+@foreach (var item in Model)
+{
+    <div>
+        <a href="@Url.Action("sanPhamTheoDanhMucLaptop","SanPham", new { @maDanhMuc = item.maDanhMuc})"><img src="@item.logoTungDanhMucSP" style="margin-right:10px; width:70px; height:80px" /></a>
+    </div>
+}

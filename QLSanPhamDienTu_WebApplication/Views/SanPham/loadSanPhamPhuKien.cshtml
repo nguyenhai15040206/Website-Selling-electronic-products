@@ -2,4 +2,69 @@
     ViewBag.Title = "loadSanPhamPhuKien";
     Layout = "~/Views/Shared/QLSPLayout.cshtml";
 }
+@using QLSanPhamDienTu_WebApplication.Models;
+@model List<SanPham>
+
+<style type="text/css">
+    #hover:hover {
+        /*transform: scale(1.1);*/
+        transform: scale(1.1);
+        transition: all 0.2s;
+    }
+
+    #text {
+        position: absolute;
+        top: 195px;
+    }
+
+    #img-hover img:hover {
+        transform: scale(1.1);
+        transition: all 0.4s;
+    }
+</style>
+<body class="bg-light">
+    <div class="card mt-2">
+        <div class="card-header" style="font-size:20px; font-weight:bold">Danh sách Laptop<span style="font-size:13px; font-weight:500">  (@ViewBag.TongSPLaptop sản phẩm)</span></div>
+        <div class="card">
+            <div class="card-body">
+                @*<div id="img-hover" class="d-flex">
+                    @Html.Action("LogoDanhMucPhuKien", "DanhMucSanPham")
+                </div>*@
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row ml-0 bg-light card-body" style=" border-radius:3px">
+                @{ foreach (var item in Model)
+                    {
+                        <div id="hover" class="col-3 card" style="border:none; border-bottom:1px solid gray">
+                            @if (item.giamGia != 0)
+                            {
+                                <div id="text" style="background-color:red; border-radius:15px; width:110px">
+                                    <center><span style="font-size:11px;color:white; text-align:center">Giảm @string.Format("{0:0,0}", item.giamGia)đ</span></center>
+                                </div>
+                            }
+                            <img class="card-img-top" src="@item.hinhMinhHoa" style="height:220px; width:100%" />
+                            <div class="card" style="border:none; margin-top:5px">
+                                <h5 class="card-text text-dark" style="font-size:15px; font-weight:bold">@item.tenSanPham</h5>
+                                <div class="d-flex" style="margin-top:0px;">
+                                    <div style="width:65%">
+                                        <span class="text-danger" style="">@string.Format("{0:0,0}", (item.donGia - item.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                                    </div>
+                                    <div style="width:35%">
+                                        @if (item.giamGia > 0)
+                                        {
+                                            <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                                        }
+                                    </div>
+                                </div>
+                                <a href="@Url.Action("chiTietSanPhamPhuKien", "SanPham", new { @maSP = item.maSanPham })" style="margin-top:5px">Xem chi tiết...</a>
+                                <br />
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>
 

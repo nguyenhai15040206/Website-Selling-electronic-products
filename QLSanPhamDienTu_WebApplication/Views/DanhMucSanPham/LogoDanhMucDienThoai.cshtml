@@ -4,6 +4,6 @@
 @foreach (var item in Model)
 {
     <div>
-        <a href="@Url.Action("sanPhamTheoMaLoai","SanPham", new { @maDanhMuc = item.maDanhMuc})"><img src="../Images/Logo/@item.logoTungDanhMucSP" style="margin-right:10px" /></a>
+        <a href="@Url.Action("sanPhamTheoMaLoai","SanPham", new { @maDanhMuc = item.maDanhMuc})"><img src="@item.logoTungDanhMucSP" style="margin-right:10px" /></a>
     </div>
 }

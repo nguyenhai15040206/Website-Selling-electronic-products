@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using QLSanPhamDienTu_WebApplication.Models;
@@ -13,6 +14,12 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         // GET: /GioHang/
         QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
         KiemTraDuLieu ktdl = new KiemTraDuLieu();
+        public static HttpClient client;
+        public GioHangController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("http://192.168.1.3:5000/Home/Introduct/");
+        }
         public List<GioHang> layGioHang()
         {
             List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
@@ -66,6 +73,17 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             if (listGioHang != null)
             {
                 tong += listGioHang.Sum(m => m.ThanhTien);
+            }
+            return tong;
+        }
+
+        private double tongTienBan()
+        {
+            double tong = 0;
+            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
+            if (listGioHang != null)
+            {
+                tong += listGioHang.Sum(m => m.donGia);
             }
             return tong;
         }
@@ -164,35 +182,69 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         {
             HoaDon hoaDon = new HoaDon();
             KhachHang khachHang = (KhachHang)Session["TaiKhoan"];
-            var kh = db.KhachHangs.Single(m => m.maKhachHang == khachHang.maKhachHang);
-            List<GioHang> listGioHang = layGioHang();
-            kh.soDienThoai = soDienThoai;
-            kh.tenKhachHang = tenKhachHang;
-            kh.diaChi = diaChi;
-            db.SubmitChanges();
-            hoaDon.maKhachHang = kh.maKhachHang;
-            hoaDon.ngayBan = DateTime.Now;
-            hoaDon.ngayGiao = DateTime.Now.AddDays(7);
-            hoaDon.ghiChu = "Chưa thanh toán";
-            hoaDon.tienBan = (decimal)tongThanhTien();
-            hoaDon.giamGia = 0;
-            hoaDon.tongTien = (decimal)tongThanhTien();
-            hoaDon.maNguoiDung = null;
-            db.HoaDons.InsertOnSubmit(hoaDon);
-            db.SubmitChanges();
-            foreach (var item in listGioHang)
+            KhachHang kh = null;
+            client.DefaultRequestHeaders.Accept.Clear();
+            var responseTask = client.GetAsync("KhachHang/" + khachHang.maKhachHang);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
             {
-                CTHoaDon ctHD = new CTHoaDon();
-                ctHD.maHoaDon = hoaDon.maHoaDon;
-                ctHD.maSanPham = item.maSanPham;
-                ctHD.soLuong = item.soLuong;
-                ctHD.donGia = (decimal)item.donGia;
-                ctHD.giamGia = item.giamGia;
-                ctHD.thanhTien = (decimal)item.ThanhTien;
-                db.CTHoaDons.InsertOnSubmit(ctHD);
+                var readObj = result.Content.ReadAsAsync<KhachHang>();
+                readObj.Wait();
+                kh = readObj.Result;
+                List<GioHang> listGioHang = layGioHang();
+                kh.soDienThoai = soDienThoai;
+                kh.tenKhachHang = tenKhachHang;
+                kh.diaChi = diaChi;
+                kh.maKhachHang = khachHang.maKhachHang;
+                kh.matKhau = khachHang.matKhau;
+                var putTask = client.PutAsJsonAsync<KhachHang>("KhachHang/" + kh.maKhachHang, kh);
+                putTask.Wait();
+                var rs = putTask.Result;
+                if (rs.IsSuccessStatusCode)
+                {
+                    hoaDon.maKhachHang = kh.maKhachHang;
+                    hoaDon.ngayBan = DateTime.Now;
+                    hoaDon.ngayGiao = DateTime.Now.AddDays(4);
+                    hoaDon.ghiChu = "Chờ xác nhận";
+                    hoaDon.tienBan = (decimal)tongTienBan();
+                    hoaDon.giamGia = tongGiamGia();
+                    hoaDon.tongTien = (decimal)tongThanhTien();
+                    hoaDon.maNguoiDung = null;
+                    hoaDon.tinhTrang = true;
+                    var postHoaDon = client.PostAsJsonAsync<HoaDon>("HoaDon", hoaDon);
+                    postHoaDon.Wait();
+                    var rsPost = postHoaDon.Result;
+                    if (rsPost.IsSuccessStatusCode)
+                    {
+                        var rsHD = rsPost.Content.ReadAsAsync<HoaDon>();
+                        rsHD.Wait();
+                        HoaDon hoaDon1 = rsHD.Result;
+                        foreach (var item in listGioHang)
+                        {
+                            CTHoaDon ctHD = new CTHoaDon();
+                            ctHD.maHoaDon = hoaDon1.maHoaDon;
+                            ctHD.maSanPham = item.maSanPham;
+                            ctHD.soLuong = item.soLuong;
+                            ctHD.donGia = (decimal)item.donGia;
+                            ctHD.giamGia = item.giamGia;
+                            ctHD.thanhTien = (decimal)item.ThanhTien;
+                            ctHD.ghiChu = "Chờ xác nhận";
+                            var postCTHD = client.PostAsJsonAsync<CTHoaDon>("CTHoaDon", ctHD);
+                            postCTHD.Wait();
+                            var rsPostCTHD = postCTHD.Result;
+                            if (rsPostCTHD.IsSuccessStatusCode)
+                            {
+                                continue;
+                            }
+                            //db.CTHoaDons.InsertOnSubmit(ctHD);
+                        }
+                    }
+                    //db.SubmitChanges();
+                    listGioHang.Clear();
+                }
             }
-            db.SubmitChanges();
-            listGioHang.Clear();
+            //var kh = db.KhachHangs.Single(m => m.maKhachHang == khachHang.maKhachHang);
             return RedirectToAction("HttpNotFound_404", "HttpNotFound");
         }
 

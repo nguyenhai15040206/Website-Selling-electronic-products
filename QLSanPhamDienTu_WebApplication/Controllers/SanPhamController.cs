@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using QLSanPhamDienTu_WebApplication.Models;
@@ -13,18 +14,58 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         // GET: /SanPham/
         QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
 
+        public static HttpClient client;
+        public SanPhamController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("http://192.168.1.3:5000/Home/Introduct/");
+        }
 
         #region Sản phẩm điện thoại
         public ActionResult loadSanPhamDienThoai()
         {
-            ViewBag.TongSPDT = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "DienThoai").Count();
-            var listSPDT = db.SanPhams.Take(12).OrderBy(m => m.tenSanPham).Where(m => m.DanhMuc.ghiChu == "DienThoai").ToList();
+
+            //var listSPDT = db.SanPhams.Take(12).OrderBy(m => m.tenSanPham).Where(m => m.DanhMuc.ghiChu == "DienThoai").ToList();
+            IEnumerable<SanPham> listSPDT = null;
+            var responseTask = client.GetAsync("SanPham/ghiChu/DienThoai");
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                
+                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                readObj.Wait();
+                listSPDT = readObj.Result.OrderByDescending(m => m.giamGia).OrderByDescending(m => m.donGia).ToList();
+                ViewBag.TongSPDT = readObj.Result.Count();
+            }
+            else
+            {
+                listSPDT = Enumerable.Empty<SanPham>();
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
+            }
+
             return View(listSPDT);
         }
 
         public ActionResult chiTietSanPhamDienThoai(int maSP)
         {
-            SanPham sp = db.SanPhams.Single(m => m.maSanPham == maSP);
+            SanPham sp = null;
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            var responseTask = client.GetAsync("SanPham/"+maSP);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readObj = result.Content.ReadAsAsync<SanPham>();
+                readObj.Wait();
+                sp = readObj.Result;
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
+            }
+            //SanPham sp = db.SanPhams.Single(m => m.maSanPham == maSP);
             if (sp == null)
             {
                 return RedirectToAction("loadSanPhamDienThoai", "SanPham");
@@ -35,9 +76,24 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
 
         public ActionResult sanPhamTheoMaLoai(int maDanhMuc)
         {
-            ViewBag.TongSPDT = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "DienThoai" && m.maDanhMuc==maDanhMuc).Count();
-            var sp = db.SanPhams.Where(m => m.maDanhMuc == maDanhMuc).ToList();
-            if(sp == null)
+            IEnumerable<SanPham> sp = null;
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            var responseTask = client.GetAsync("SanPham/DanhMuc/" + maDanhMuc);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                readObj.Wait();
+                sp = readObj.Result;
+                ViewBag.TongSPDT = sp.Count();
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
+            }
+            if (sp == null)
             {
                 return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
             }
@@ -49,14 +105,47 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         #region Sản phẩm laptop
         public ActionResult loadSanPhamLaptop()
         {
-            ViewBag.TongSPLaptop = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Laptop").Count();
-            var listSPLaptop = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Laptop").OrderByDescending(m =>m.giamGia).Take(12).OrderByDescending(m=>m.donGia).ToList();
+
+            IEnumerable<SanPham> listSPLaptop = null;
+            var responseTask = client.GetAsync("SanPham/ghiChu/Laptop");
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+
+                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                readObj.Wait();
+                listSPLaptop = readObj.Result.OrderByDescending(m=>m.giamGia).OrderByDescending(m => m.donGia).ToList();
+                ViewBag.TongSPLaptop = readObj.Result.Count();
+            }
+            else
+            {
+                listSPLaptop = Enumerable.Empty<SanPham>();
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
+            }
+            //var listSPLaptop = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Laptop").OrderByDescending(m =>m.giamGia).Take(12).OrderByDescending(m=>m.donGia).ToList();
             return View(listSPLaptop);
         }
 
         public ActionResult chiTietSanPhamLaptop(int maSP)
         {
-            SanPham sp = db.SanPhams.Single(m => m.maSanPham == maSP);
+            //SanPham sp = db.SanPhams.Single(m => m.maSanPham == maSP);
+            SanPham sp = null;
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            var responseTask = client.GetAsync("SanPham/" + maSP);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readObj = result.Content.ReadAsAsync<SanPham>();
+                readObj.Wait();
+                sp = readObj.Result;
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
+            }
             if (sp == null)
             {
                 return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
@@ -67,8 +156,24 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
 
         public ActionResult sanPhamTheoDanhMucLaptop(int maDanhMuc)
         {
-            var sp = db.SanPhams.Where(m => m.maDanhMuc == maDanhMuc).ToList();
-            if(sp == null)
+            IEnumerable<SanPham> sp = null;
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            var responseTask = client.GetAsync("SanPham/DanhMuc/" + maDanhMuc);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                readObj.Wait();
+                sp = readObj.Result;
+                ViewBag.TongSPLaptop = sp.Count();
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
+            }
+            if (sp == null)
             {
                 return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
             }    
@@ -79,27 +184,61 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         #region sản phẩm phụ kiện
         public ActionResult loadSanPhamPhuKien()
         {
-            var listSanPham = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "PhuKien").OrderByDescending(m=>m.donGia).Take(12).ToList();
-            ViewBag.TongSPPhuKien = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "PhuKien").ToList().Count();
-            if (listSanPham.Count==0)
+            //var listSanPham = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "PhuKien").OrderByDescending(m=>m.donGia).Take(12).ToList();
+            //ViewBag.TongSPPhuKien = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "PhuKien").ToList().Count();
+            IEnumerable<SanPham> listSanPham = null;
+            var responseTask = client.GetAsync("SanPham/ghiChu/PhuKien");
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
             {
+
+                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                readObj.Wait();
+                listSanPham = readObj.Result.OrderByDescending(m => m.giamGia).OrderByDescending(m => m.donGia).ToList();
+                ViewBag.TongSPPhuKien = readObj.Result.Count();
+                if (readObj.Result.Count() == 0)
+                {
+                    return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
+                }
+                return View(listSanPham);
+            }
+            else
+            {
+                listSanPham = Enumerable.Empty<SanPham>();
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
+                return null;
+            }
+        }
+
+        public ActionResult chiTietSanPhamPhuKien(int maSP)
+        {
+            //SanPham sp = db.SanPhams.Single(m => m.maSanPham == maSP);
+            SanPham sp = null;
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            var responseTask = client.GetAsync("SanPham/" + maSP);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readObj = result.Content.ReadAsAsync<SanPham>();
+                readObj.Wait();
+                sp = readObj.Result;
+                return View(sp);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
                 return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
-            }    
-            return View(listSanPham);
+            }
+                
         }
         #endregion
-
-
         #region sản phẩm apple
         public ActionResult loadSanPhamApple()
         {
-            var listSanPham = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Apple").OrderByDescending(m => m.donGia).Take(12).ToList();
-            ViewBag.TongSPPhuKien = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Apple").ToList().Count();
-            if (listSanPham.Count == 0)
-            {
-                return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
-            }
-            return View(listSanPham);
+            return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
         }
         #endregion
     }

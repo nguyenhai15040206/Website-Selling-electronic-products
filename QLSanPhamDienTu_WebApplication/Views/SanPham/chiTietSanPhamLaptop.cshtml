@@ -10,7 +10,7 @@
     <hr />
     <div class="d-flex">
         <div class="card" style="width:40%;">
-            <center><img class="card-image-top" src="../Images/SanPhams/@Model.hinhMinhHoa" style="height:330px; width:75%;" /></center>
+            <center><img class="card-image-top" src="@Model.hinhMinhHoa" style="height:330px; width:75%;" /></center>
             <div class="card bg-light" style="border:none; padding:5px">
                 @{
                     if(Model.moTa !=null)
@@ -105,12 +105,20 @@
                 </div>
                 <div class="card-body">
                     @{
-                        string[] khuyeMai = Model.khuyenMai.Split('|');
-                        for (int i = 0; i < khuyeMai.Length; i++)
+                        if (Model.khuyenMai != null)
                         {
+
+                            string[] khuyeMai = Model.khuyenMai.Split('|');
+                            for (int i = 0; i < khuyeMai.Length; i++)
+                            {
                             <p><i class="fas fa-check-circle" style="color:green"></i> @khuyeMai[i].ToString()</p>
+                            }
                         }
-                    }
+                        else
+                        {
+                <p><i class="fas fa-check-circle" style="color:green"></i>Chưa cập nhật</p>
+                            }
+                        }
                 </div>
             </div>
             <div class="card mt-2">
@@ -124,7 +132,7 @@
                             string[] dsHinhs = Model.dsHinh.Trim().Split(',');
                             foreach (var item in dsHinhs)
                             {
-                                <img id="zum" style="width:100px; height:90px" class="img-thumbnail ml-2" src="../Images/SanPham/@item.ToString().Trim()" />
+                                <img id="zum" style="width:100px; height:90px" class="img-thumbnail ml-2" src="@item.ToString().Trim()" />
                             }
                         }
                         else

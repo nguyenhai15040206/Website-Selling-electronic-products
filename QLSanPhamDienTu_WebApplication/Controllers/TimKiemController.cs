@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using QLSanPhamDienTu_WebApplication.Models;
@@ -12,36 +13,50 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         //
         // GET: /TimKiem/
         QLSanPhamDienTuDataContext db = new QLSanPhamDienTuDataContext();
+        public static HttpClient client;
+        public TimKiemController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("http://192.168.1.3:5000/Home/Introduct/");
+        }
         public ActionResult Index()
         {
             return View();
         }
 
         public ActionResult TimKiemSanPham(string input)
-        {
-            string ghiChu = "";
-            if(string.Compare(input,"Điện thoại",true)==0)
+        {  
+            if(input=="Phụ kiện")
             {
-                ghiChu = "DienThoai";
+                input = "PhuKien";
+            }    
+            //if(input.Trim() == "")
+            //{
+            //    return RedirectToAction("loadSanPhamDienThoai", "SanPham");
+            //}    
+            IEnumerable<NewSanPham> listSanPham = null;
+            var responseTask = client.GetAsync("SanPhamFillter/"+input);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readObj = result.Content.ReadAsAsync<IList<NewSanPham>>();
+                readObj.Wait();
+                listSanPham = readObj.Result.OrderByDescending(m => m.GiamGia).OrderByDescending(m => m.DonGia).ToList();
+                ViewBag.TongSPLaptop = readObj.Result.Count();
+                if (readObj.Result.Count() == 0)
+                {
+                    return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
+                }
+                return View(listSanPham);
             }
-            if(string.Compare(input, "Laptop", true)==0)
+            else
             {
-                ghiChu = "Laptop";
-            }      
-                
-            if(input.Trim() == "")
-            {
-                return RedirectToAction("loadSanPhamDienThoai", "SanPham");
-            }    
-            var listSanPham = db.SanPhams.Where(m => m.tenSanPham.Contains(input) || m.DanhMuc.tenDanhMuc.Contains(input) ||
-             m.DanhMuc.ghiChu == ghiChu)
-                .OrderByDescending(m=>m.donGia) . ToList();
-            ViewBag.TongSPLaptop = listSanPham.Count();
-            if (listSanPham.Count ==0)
-            {
+                listSanPham = Enumerable.Empty<NewSanPham>();
+                ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
                 return RedirectToAction("DanhSachSanPhamRong", "HttpNotFound");
-            }    
-            return View(listSanPham);
+            }
+            
         }
 
     }
