@@ -2,21 +2,21 @@
     ViewBag.Title = "chiTietSanPhamLaptop";
     Layout = "~/Views/Shared/QLSPLayout.cshtml";
 }
-@model QLSanPhamDienTu_WebApplication.Models.SanPham
+@model QLSanPhamDienTu_WebApplication.Models.NewSanPham
 <br />
 <body class="bg-light">
 <div class="container mt-2">
-    <h5 style="font-weight:bold">@Model.tenSanPham</h5>
+    <h5 style="font-weight:bold">@Model.TenSanPham</h5>
     <hr />
     <div class="d-flex">
         <div class="card" style="width:40%;">
-            <center><img class="card-image-top" src="@Model.hinhMinhHoa" style="height:330px; width:75%;" /></center>
+            <center><img class="card-image-top" src="@Model.HinhMinhHoa" style="height:330px; width:75%;" /></center>
             <div class="card bg-light" style="border:none; padding:5px">
                 @{
-                    if(Model.moTa !=null)
+                    if(Model.MoTa !=null)
                     {
-                    string []mota = @Model.moTa.Split('|');
-                    string []motaChiTiet = @Model.moTaChiTiet.Split('|');
+                    string []mota = @Model.MoTa.Split('|');
+                    string []motaChiTiet = @Model.MoTaChiTiet.Split('|');
                     <p class="text-dark ml-1" style="font-size:14px"><i class="fas fa-laptop-code" style="color:#BBBBBB; font-size:20px"></i> @mota[0].ToString()</p>
                     <p class="text-dark ml-1" style="font-size:14px; margin-top:-5px"><i class="fas fa-server" style="color:#BBBBBB"></i>  @mota[1].ToString()</p>
                     <p class="text-dark ml-1" style="font-size:14px; margin-top:-5px"><i class="fa fa-microchip" style="color:#BBBBBB"></i>  @mota[2].ToString()</p>
@@ -64,11 +64,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Xuất xứ</td>
-                                                        <td>@Model.xuatXu</td>
+                                                        <td>@Model.XuatXu</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Năm ra mắt</td>
-                                                        <td>@Model.ngayCapNhat</td>
+                                                        <td>@Model.NgayCapNhat</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -84,20 +84,20 @@
             </div>
         </div>
         <div class="ml-4" style="width:60%">
-            @if(@Model.giamGia >0)
+            @if(@Model.GiamGia >0)
                 {
             <div class="d-flex" style="">
                         <div style="width:25%">
-                            <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@Model.donGia-@Model.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                            <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@Model.DonGia-@Model.GiamGia))<span style="text-decoration-line:underline">đ</span></span>
                         </div>
                         <div style="width:75%">
-                            <del><span class="text-dark " style="font-size:16px;">@string.Format("{0:0,0}", @Model.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                            <del><span class="text-dark " style="font-size:16px;">@string.Format("{0:0,0}", @Model.DonGia)<span style="text-decoration-line:underline">đ</span></span></del>
                         </div>
                 </div>
             }
             else
             {
-                <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@Model.donGia-@Model.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                <span class="text-danger h4" style="">@string.Format("{0:0,0}", (@Model.DonGia-@Model.GiamGia))<span style="text-decoration-line:underline">đ</span></span>
             }
             <div class="card">
                 <div class="card-header">
@@ -105,10 +105,10 @@
                 </div>
                 <div class="card-body">
                     @{
-                        if (Model.khuyenMai != null)
+                        if (Model.KhuyenMai != null)
                         {
 
-                            string[] khuyeMai = Model.khuyenMai.Split('|');
+                            string[] khuyeMai = Model.KhuyenMai.Split('|');
                             for (int i = 0; i < khuyeMai.Length; i++)
                             {
                             <p><i class="fas fa-check-circle" style="color:green"></i> @khuyeMai[i].ToString()</p>
@@ -127,9 +127,9 @@
                 </div>
                 <div class="card-body d-flex">
                     @{
-                        if(Model.dsHinh != null)
+                        if(Model.DsHinh != null)
                         {
-                            string[] dsHinhs = Model.dsHinh.Trim().Split(',');
+                            string[] dsHinhs = Model.DsHinh.Trim().Split(',');
                             foreach (var item in dsHinhs)
                             {
                                 <img id="zum" style="width:100px; height:90px" class="img-thumbnail ml-2" src="@item.ToString().Trim()" />
@@ -144,7 +144,7 @@
             </div>
             <div class="mt-3 d-flex">
                 <div style="width:50%">
-                    <a href="@Url.Action("themSPVaoGioHang", "GioHang", new { @maSP=Model.maSanPham, @strUrl=Request.Url.ToString()})"><button class="btn btn-primary" style="height:45px;margin-left:25px; width:90%; font-weight:bold" type="submit">MUA NGAY</button></a>
+                    <a href="@Url.Action("themSPVaoGioHang", "GioHang", new { @maSP=Model.MaSanPham, @strUrl=Request.Url.ToString()})"><button class="btn btn-primary" style="height:45px;margin-left:25px; width:90%; font-weight:bold" type="submit">MUA NGAY</button></a>
                 </div>
                 <div style="width:50%">
                     <a href="@Url.Action("loadSanPhamLaptop","SanPham")"><button class="btn btn-primary" style="height:45px; width:90%; font-weight:bold; float:right; margin-right:25px" type="submit">MUA TIẾP</button></a>

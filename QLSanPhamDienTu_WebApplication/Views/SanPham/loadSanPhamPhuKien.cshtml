@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/QLSPLayout.cshtml";
 }
 @using QLSanPhamDienTu_WebApplication.Models;
-@model List<SanPham>
+@model List<NewSanPham>
 
 <style type="text/css">
     #hover:hover {
@@ -24,7 +24,7 @@
 </style>
 <body class="bg-light">
     <div class="card mt-2">
-        <div class="card-header" style="font-size:20px; font-weight:bold">Danh sách Laptop<span style="font-size:13px; font-weight:500">  (@ViewBag.TongSPLaptop sản phẩm)</span></div>
+        <div class="card-header" style="font-size:20px; font-weight:bold">Danh sách phụ kiện<span style="font-size:13px; font-weight:500">  (@ViewBag.TongSPLaptop sản phẩm)</span></div>
         <div class="card">
             <div class="card-body">
                 @*<div id="img-hover" class="d-flex">
@@ -37,27 +37,27 @@
                 @{ foreach (var item in Model)
                     {
                         <div id="hover" class="col-3 card" style="border:none; border-bottom:1px solid gray">
-                            @if (item.giamGia != 0)
+                            @if (item.GiamGia != 0)
                             {
                                 <div id="text" style="background-color:red; border-radius:15px; width:110px">
-                                    <center><span style="font-size:11px;color:white; text-align:center">Giảm @string.Format("{0:0,0}", item.giamGia)đ</span></center>
+                                    <center><span style="font-size:11px;color:white; text-align:center">Giảm @string.Format("{0:0,0}", item.GiamGia)đ</span></center>
                                 </div>
                             }
-                            <img class="card-img-top" src="@item.hinhMinhHoa" style="height:220px; width:100%" />
+                            <img class="card-img-top" src="@item.HinhMinhHoa" style="height:220px; width:100%" />
                             <div class="card" style="border:none; margin-top:5px">
-                                <h5 class="card-text text-dark" style="font-size:15px; font-weight:bold">@item.tenSanPham</h5>
+                                <h5 class="card-text text-dark" style="font-size:15px; font-weight:bold">@item.TenSanPham</h5>
                                 <div class="d-flex" style="margin-top:0px;">
                                     <div style="width:65%">
-                                        <span class="text-danger" style="">@string.Format("{0:0,0}", (item.donGia - item.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                                        <span class="text-danger" style="">@string.Format("{0:0,0}", (item.DonGia - item.GiamGia))<span style="text-decoration-line:underline">đ</span></span>
                                     </div>
                                     <div style="width:35%">
-                                        @if (item.giamGia > 0)
+                                        @if (item.GiamGia > 0)
                                         {
-                                            <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                                            <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.DonGia)<span style="text-decoration-line:underline">đ</span></span></del>
                                         }
                                     </div>
                                 </div>
-                                <a href="@Url.Action("chiTietSanPhamPhuKien", "SanPham", new { @maSP = item.maSanPham })" style="margin-top:5px">Xem chi tiết...</a>
+                                <a href="@Url.Action("chiTietSanPhamPhuKien", "SanPham", new { @maSP = item.MaSanPham })" style="margin-top:5px">Xem chi tiết...</a>
                                 <br />
                             </div>
                         </div>

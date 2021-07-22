@@ -26,21 +26,21 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         {
 
             //var listSPDT = db.SanPhams.Take(12).OrderBy(m => m.tenSanPham).Where(m => m.DanhMuc.ghiChu == "DienThoai").ToList();
-            IEnumerable<SanPham> listSPDT = null;
+            IEnumerable<NewSanPham> listSPDT = null;
             var responseTask = client.GetAsync("SanPham/ghiChu/DienThoai");
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
                 
-                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                var readObj = result.Content.ReadAsAsync<IList<NewSanPham>>();
                 readObj.Wait();
-                listSPDT = readObj.Result.OrderByDescending(m => m.giamGia).OrderByDescending(m => m.donGia).ToList();
+                listSPDT = readObj.Result.OrderByDescending(m => m.GiamGia).OrderByDescending(m => m.DonGia).ToList();
                 ViewBag.TongSPDT = readObj.Result.Count();
             }
             else
             {
-                listSPDT = Enumerable.Empty<SanPham>();
+                listSPDT = Enumerable.Empty<NewSanPham>();
                 ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
             }
 
@@ -49,7 +49,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
 
         public ActionResult chiTietSanPhamDienThoai(int maSP)
         {
-            SanPham sp = null;
+            NewSanPham sp = null;
             client.DefaultRequestHeaders.Accept.Clear();
 
             var responseTask = client.GetAsync("SanPham/"+maSP);
@@ -57,7 +57,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readObj = result.Content.ReadAsAsync<SanPham>();
+                var readObj = result.Content.ReadAsAsync<NewSanPham>();
                 readObj.Wait();
                 sp = readObj.Result;
             }
@@ -76,7 +76,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
 
         public ActionResult sanPhamTheoMaLoai(int maDanhMuc)
         {
-            IEnumerable<SanPham> sp = null;
+            IEnumerable<NewSanPham> sp = null;
             client.DefaultRequestHeaders.Accept.Clear();
 
             var responseTask = client.GetAsync("SanPham/DanhMuc/" + maDanhMuc);
@@ -84,7 +84,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                var readObj = result.Content.ReadAsAsync<IList<NewSanPham>>();
                 readObj.Wait();
                 sp = readObj.Result;
                 ViewBag.TongSPDT = sp.Count();
@@ -106,21 +106,21 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         public ActionResult loadSanPhamLaptop()
         {
 
-            IEnumerable<SanPham> listSPLaptop = null;
+            IEnumerable<NewSanPham> listSPLaptop = null;
             var responseTask = client.GetAsync("SanPham/ghiChu/Laptop");
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
 
-                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                var readObj = result.Content.ReadAsAsync<IList<NewSanPham>>();
                 readObj.Wait();
-                listSPLaptop = readObj.Result.OrderByDescending(m=>m.giamGia).OrderByDescending(m => m.donGia).ToList();
+                listSPLaptop = readObj.Result.OrderByDescending(m=>m.GiamGia).OrderByDescending(m => m.DonGia).ToList();
                 ViewBag.TongSPLaptop = readObj.Result.Count();
             }
             else
             {
-                listSPLaptop = Enumerable.Empty<SanPham>();
+                listSPLaptop = Enumerable.Empty<NewSanPham>();
                 ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
             }
             //var listSPLaptop = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "Laptop").OrderByDescending(m =>m.giamGia).Take(12).OrderByDescending(m=>m.donGia).ToList();
@@ -130,7 +130,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         public ActionResult chiTietSanPhamLaptop(int maSP)
         {
             //SanPham sp = db.SanPhams.Single(m => m.maSanPham == maSP);
-            SanPham sp = null;
+            NewSanPham sp = null;
             client.DefaultRequestHeaders.Accept.Clear();
 
             var responseTask = client.GetAsync("SanPham/" + maSP);
@@ -138,7 +138,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readObj = result.Content.ReadAsAsync<SanPham>();
+                var readObj = result.Content.ReadAsAsync<NewSanPham>();
                 readObj.Wait();
                 sp = readObj.Result;
             }
@@ -156,7 +156,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
 
         public ActionResult sanPhamTheoDanhMucLaptop(int maDanhMuc)
         {
-            IEnumerable<SanPham> sp = null;
+            IEnumerable<NewSanPham> sp = null;
             client.DefaultRequestHeaders.Accept.Clear();
 
             var responseTask = client.GetAsync("SanPham/DanhMuc/" + maDanhMuc);
@@ -164,7 +164,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                var readObj = result.Content.ReadAsAsync<IList<NewSanPham>>();
                 readObj.Wait();
                 sp = readObj.Result;
                 ViewBag.TongSPLaptop = sp.Count();
@@ -186,16 +186,16 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         {
             //var listSanPham = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "PhuKien").OrderByDescending(m=>m.donGia).Take(12).ToList();
             //ViewBag.TongSPPhuKien = db.SanPhams.Where(m => m.DanhMuc.ghiChu == "PhuKien").ToList().Count();
-            IEnumerable<SanPham> listSanPham = null;
+            IEnumerable<NewSanPham> listSanPham = null;
             var responseTask = client.GetAsync("SanPham/ghiChu/PhuKien");
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
 
-                var readObj = result.Content.ReadAsAsync<IList<SanPham>>();
+                var readObj = result.Content.ReadAsAsync<IList<NewSanPham>>();
                 readObj.Wait();
-                listSanPham = readObj.Result.OrderByDescending(m => m.giamGia).OrderByDescending(m => m.donGia).ToList();
+                listSanPham = readObj.Result.OrderByDescending(m => m.GiamGia).OrderByDescending(m => m.DonGia).ToList();
                 ViewBag.TongSPPhuKien = readObj.Result.Count();
                 if (readObj.Result.Count() == 0)
                 {
@@ -205,7 +205,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             }
             else
             {
-                listSanPham = Enumerable.Empty<SanPham>();
+                listSanPham = Enumerable.Empty<NewSanPham>();
                 ModelState.AddModelError(string.Empty, "Kết nối internet không ổn định");
                 return null;
             }
@@ -214,7 +214,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
         public ActionResult chiTietSanPhamPhuKien(int maSP)
         {
             //SanPham sp = db.SanPhams.Single(m => m.maSanPham == maSP);
-            SanPham sp = null;
+            NewSanPham sp = null;
             client.DefaultRequestHeaders.Accept.Clear();
 
             var responseTask = client.GetAsync("SanPham/" + maSP);
@@ -222,7 +222,7 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readObj = result.Content.ReadAsAsync<SanPham>();
+                var readObj = result.Content.ReadAsAsync<NewSanPham>();
                 readObj.Wait();
                 sp = readObj.Result;
                 return View(sp);

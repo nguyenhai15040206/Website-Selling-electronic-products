@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/QLSPLayout.cshtml";
 }
 @using QLSanPhamDienTu_WebApplication.Models;
-@model List<SanPham>
+@model List<NewSanPham>
 
 
 
@@ -47,28 +47,28 @@
                     foreach (var item in Model)
                     {
                         <div id="hover" class="col-3 card" style="border:none; border-bottom:1px solid gray">
-                            @if (item.giamGia != 0)
+                            @if (item.GiamGia != 0)
                             {
                                 <div id="text" style="background-color:red; border-radius:15px; width:110px">
-                                    <center><span style="font-size:11px;color:white; text-align:center">Giảm @string.Format("{0:0,0}", item.giamGia)đ</span></center>
+                                    <center><span style="font-size:11px;color:white; text-align:center">Giảm @string.Format("{0:0,0}", item.GiamGia)đ</span></center>
                                 </div>
                             }
-                            <img class="card-img-top" src="@item.hinhMinhHoa" style="height:220px; width:100%" />
+                            <img class="card-img-top" src="@item.HinhMinhHoa" style="height:220px; width:100%" />
                             <div class="card" style="border:none; margin-top:5px">
-                                <h5 class="card-text text-dark" style="font-size:15px; font-weight:bold">@item.tenSanPham</h5>
+                                <h5 class="card-text text-dark" style="font-size:15px; font-weight:bold">@item.TenSanPham</h5>
                                 <div class="d-flex" style="margin-top:0px;">
                                     <div style="width:65%">
-                                        <span class="text-danger" style="">@string.Format("{0:0,0}", (item.donGia - item.giamGia))<span style="text-decoration-line:underline">đ</span></span>
+                                        <span class="text-danger" style="">@string.Format("{0:0,0}", (item.DonGia - item.GiamGia))<span style="text-decoration-line:underline">đ</span></span>
                                     </div>
                                     <div style="width:35%">
-                                        @if (item.giamGia > 0)
+                                        @if (item.GiamGia > 0)
                                         {
-                                        <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.donGia)<span style="text-decoration-line:underline">đ</span></span></del>
+                                        <del><span class="text-dark" style="font-size:9px">@string.Format("{0:0,0}", item.DonGia)<span style="text-decoration-line:underline">đ</span></span></del>
                                         }
                                     </div>
                                 </div>
                                 @{
-                                    string[] mota = item.moTa.Split('|');
+                                    string[] mota = item.MoTa.Split('|');
                                     <div class="d-flex" style="margin-top:2px">
                                         <div style="width:42%">
                                             <p class="text-dark" data-toggle="tooltip" data-placement="top" title="CPU" style="font-size:13px"><i class="fas fa-th"></i>  @mota[3].ToString().Trim().Substring(0, 7) ...</p>
@@ -88,7 +88,7 @@
                                         </div>
                                     </div>
                                     <p class="text-dark" data-toggle="tooltip" data-placement="top" title="Bộ nhớ trong" style="font-size:14px;margin-top:-15px"><i class="fa fa-hdd"></i>  @mota[5].ToString().Trim()</p>
-                                    <a href="@Url.Action("chiTietSanPhamDienThoai", "SanPham", new {@maSP = item.maSanPham })" style="margin-top:-10px">Xem chi tiết...</a>
+                                    <a href="@Url.Action("chiTietSanPhamDienThoai", "SanPham", new {@maSP = item.MaSanPham })" style="margin-top:-10px">Xem chi tiết...</a>
                                     <br />
                                 }
                             </div>

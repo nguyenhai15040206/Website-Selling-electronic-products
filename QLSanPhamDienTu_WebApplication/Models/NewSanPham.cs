@@ -35,6 +35,7 @@ namespace QLSanPhamDienTu_WebApplication.Models
 
 		private System.Nullable<int> maDanhMuc;
         private string ghiChu;
+        private string tenDanhMuc;
 
         public int MaSanPham { get => maSanPham; set => maSanPham = value; }
         public string TenSanPham { get => tenSanPham; set => tenSanPham = value; }
@@ -51,5 +52,6 @@ namespace QLSanPhamDienTu_WebApplication.Models
         public bool? TinhTrang { get => tinhTrang; set => tinhTrang = value; }
         public int? MaDanhMuc { get => maDanhMuc; set => maDanhMuc = value; }
         public string GhiChu { get => ghiChu; set => ghiChu = value; }
+        public string TenDanhMuc { get => tenDanhMuc; set => tenDanhMuc = value; }
     }
 }

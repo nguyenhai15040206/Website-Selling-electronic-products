@@ -1,0 +1,86 @@
+﻿
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="~/Contains/QLSP.css" />
+    @using QLSanPhamDienTu_WebApplication.Models;
+    @model List<NewSanPham>
+</head>
+
+<body class="bg-light" style="width:100%">
+    <div>
+        <div class="alert alert-success alert-dismissible" style="width: 100%;">
+            <button type="button" class="close" data-dismiss="alert-dismissible">&times;</button>
+            Bạn có thể mua cùng
+        </div>
+        <div class="bg-light" style="width:100%;padding-right:20px">
+            <div class="row ml-0 bg-light card-body">
+                @foreach (var item in Model)
+                {
+                    <div id="hover" class="col-4 card" style="border:none;">
+                        <div class="d-flex">
+                            <div>
+                                <img class="img-thumbnail" src="@item.HinhMinhHoa" style="width:100px; height:70px; margin-right:10px" />
+                            </div>
+                            <div>
+                                @if (item.TenSanPham.Trim().Length <= 25)
+                                {
+                                    if (item.GhiChu == "DienThoai")
+                                    {
+                                        <a style="color:black" href="@Url.Action("chiTietSanPhamDienThoai", "SanPham", new {@maSP = item.MaSanPham })"><p style="font-size: 11px">@item.TenSanPham</p> </a>
+                                    }
+                                    if (item.GhiChu == "Laptop")
+                                    {
+                                        <a style="color:black" href="@Url.Action("chiTietSanPhamLaptop", "SanPham", new {@maSP = item.MaSanPham })"><p style="font-size: 11px">@item.TenSanPham</p> </a>
+                                    }
+                                    if (item.GhiChu == "PhuKien")
+                                    {
+                                        <a style="color:black" href="@Url.Action("chiTietSanPhamPhuKien", "SanPham", new {@maSP = item.MaSanPham })"><p style="font-size: 11px">@item.TenSanPham</p></a>
+                                    }
+
+                                }
+                                else
+                                {
+                                    if (item.GhiChu == "DienThoai")
+                                    {
+                                        <a style="color:black" href="@Url.Action("chiTietSanPhamDienThoai", "SanPham", new {@maSP = item.MaSanPham })"><p style="font-size: 11px">@item.TenSanPham.Substring(0, 25)<span>...</span></p></a>
+                                    }
+                                    if (item.GhiChu == "Laptop")
+                                    {
+                                        <a style="color:black" href="@Url.Action("chiTietSanPhamLaptop", "SanPham", new {@maSP = item.MaSanPham })"><p style="font-size: 11px">@item.TenSanPham.Substring(0, 25)<span>...</span></p></a>
+                                    }
+                                    if (item.GhiChu == "PhuKien")
+                                    {
+                                        <a style="color:black" href="@Url.Action("chiTietSanPhamPhuKien", "SanPham", new {@maSP = item.MaSanPham })"><p style="font-size: 11px">@item.TenSanPham.Substring(0, 25)<span>...</span></p></a>
+                                    }
+                                }
+
+                                <div class="d-flex" style="margin-top:-15px;">
+                                    <div>
+                                        <span class="text-danger" style="font-size: 9px">@string.Format("{0:0,0}", (item.DonGia - item.GiamGia))<span style="text-decoration-line:underline;">đ</span></span>
+                                    </div>
+
+                                </div>
+                                <a href="@Url.Action("themSPVaoGioHang", "GioHang", new { @maSP=item.MaSanPham, @strUrl=Request.Url.ToString()})"><button class="btn btn-light" style="font-size:11px;">Thêm vào giỏ hàng</button></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Messenger Plugin chat Code -->
+    <script type="text/javascript" src="https://ahachat.com/customer-chats/customer_chat_sX5q5l1f2q609d4b3f804f1.js"></script>
+</body>

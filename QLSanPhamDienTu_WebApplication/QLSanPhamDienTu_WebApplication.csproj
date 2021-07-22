@@ -142,6 +142,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QLSanPhamDienTu.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Itemset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +335,7 @@
     <Content Include="Views\TinTuc\Index.cshtml" />
     <Content Include="Views\SanPham\chiTietSanPhamPhuKien.cshtml" />
     <Content Include="Views\DanhMucSanPham\LogoDanhMucPhuKien.cshtml" />
+    <Content Include="Views\GioHang\AprioriAlgorithm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

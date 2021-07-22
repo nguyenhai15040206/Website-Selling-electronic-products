@@ -15,6 +15,8 @@ namespace QLSanPhamDienTu_WebApplication.Models
         public double donGia { get; set; }
         public double giamGia { get; set; }
         public int soLuong { get; set; }
+        public string ghiChu { get; set; }
+        public string tenDanhMuc { get; set; }
         public double ThanhTien
         {
             get { return soLuong * (donGia-giamGia); }
@@ -27,7 +29,7 @@ namespace QLSanPhamDienTu_WebApplication.Models
         public GioHang(int maSanPham)
         {
             this.maSanPham = maSanPham;
-            SanPham sp = null;
+            NewSanPham sp = null;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://192.168.1.3:5000/Home/Introduct/");
@@ -36,14 +38,16 @@ namespace QLSanPhamDienTu_WebApplication.Models
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readObj = result.Content.ReadAsAsync<SanPham>();
+                    var readObj = result.Content.ReadAsAsync<NewSanPham>();
                     readObj.Wait();
                     sp = readObj.Result;
-                    tenSanPham = sp.tenSanPham;
-                    hinhAnh = sp.hinhMinhHoa;
-                    donGia = (double.Parse(sp.donGia.ToString()));
-                    giamGia = (double.Parse(sp.giamGia.ToString()));
+                    tenSanPham = sp.TenSanPham;
+                    hinhAnh = sp.HinhMinhHoa;
+                    donGia = (double.Parse(sp.DonGia.ToString()));
+                    giamGia = (double.Parse(sp.GiamGia.ToString()));
                     soLuong = 1;
+                    ghiChu = sp.GhiChu.Trim();
+                    tenDanhMuc = sp.TenDanhMuc.Trim();
                 }
                 else
                 {

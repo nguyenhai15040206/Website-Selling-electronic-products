@@ -31,6 +31,125 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             }
             return listGioHang;
         }
+        //
+        public ActionResult AprioriAlgorithm()
+        {
+            List<GioHang> listGioHangs = layGioHang();
+            List<NewSanPham> listSanPham = new List<NewSanPham>();
+            if(listGioHangs.Count ==0)
+            {
+                return null;
+            }
+            listSanPham = dsSanPhamGoiY();
+            if(listSanPham ==null || listSanPham.Count==0)
+            {
+                return null;
+            }    
+            
+            return View(listSanPham);
+        }
+
+        public List<NewSanPham> dsSanPhamGoiY()
+        {
+            List<GioHang> listGioHangs = layGioHang();
+            List<NewSanPham> listSanPhamTmp = new List<NewSanPham>();
+            List<NewSanPham> listSanPham = new List<NewSanPham>();
+            List<string> listString = new List<string>();
+            List<string> listSubset = new List<string>();
+            if(listGioHangs==null)
+            {
+                return null;
+            }    
+            listString.AddRange(listGioHangs.AsEnumerable().Where(m=>m.ghiChu == "DienThoai"|| m.ghiChu == "Laptop").Select(m => m.ghiChu).ToArray().Distinct());
+            listString.AddRange(listGioHangs.AsEnumerable().Where(m => m.ghiChu == "PhuKien").Select(m => m.tenDanhMuc).ToArray().Distinct());
+            if(listString.Count==0)
+            {
+                return null;
+            }
+            else
+            {
+                List<string> listSubs = new List<string>();
+                for(int i=0;i < listString.Count; i++)
+                {
+                    FindSubsets(listString[i].ToString().Trim(), listSubs);
+                }
+                foreach(var sub in listSubs)
+                {
+                    IEnumerable<NewSanPham> sp = null;
+                    client.DefaultRequestHeaders.Accept.Clear();
+
+                    var responseTask = client.GetAsync("Apriori/" + sub.Substring(0,sub.Length-1).Trim());
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readObj = result.Content.ReadAsAsync<IList<NewSanPham>>();
+                        readObj.Wait();
+                        sp = readObj.Result;  
+                        listSanPhamTmp.AddRange(sp.AsEnumerable().OrderByDescending(m => m.DonGia).ToArray());
+                        //ViewBag.TongSPLaptop = sp.Count();
+                    }
+                }
+                listSanPham = dsSanPhamkhongTrungNhau(listSanPhamTmp);
+
+               // var listDisstinct = listSanPhamTmp.Distinct().ToList();
+                //listSanPham.AddRange(listSanPhamTmp.Union(listSanPham).Distinct());
+            }
+            return listSanPham;
+        }
+
+        public List<NewSanPham> dsSanPhamkhongTrungNhau(List<NewSanPham> listTmp)
+        {
+            List<NewSanPham> listSanPhamTmp = new List<NewSanPham>();
+            List<NewSanPham> listSanPham = new List<NewSanPham>();
+            List<GioHang> listGioHangs = layGioHang();
+            //var rs = listTmp.AsEnumerable().Select(m => m.MaSanPham).ToArray();
+            // lấy ra những sản phẩm không trung nhau
+            foreach (NewSanPham item in listTmp) 
+            {
+                if(!listSanPhamTmp.Select(m=>m.MaSanPham).Contains(item.MaSanPham))
+                {
+                    listSanPhamTmp.Add(item);
+                }    
+            }
+            listSanPham = listSanPhamTmp;
+            // nếu giỏ hàng tồn tại rồi thì remove nó đi
+            foreach(var itemGH in listGioHangs)
+            {
+                foreach(var itemSP in listSanPhamTmp)
+                {
+                    if (itemGH.tenDanhMuc.Equals(itemSP.TenDanhMuc))
+                    {
+                        var sp = listSanPham.SingleOrDefault(m => m.TenDanhMuc == itemGH.tenDanhMuc);
+                        listSanPham.Remove(sp);
+                        break;
+                    }    
+                }    
+            }    
+            return listSanPham;
+        }
+        
+
+        public void FindSubsets(string s, List<string> listSub)
+        {
+            if (listSub.Count == 0)
+            {
+                listSub.Add(s+",");
+            }
+            else
+            {
+                int count = listSub.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    if (!listSub.Contains(s+","))
+                    {
+                        listSub.Add(s+",");
+                    }
+                    listSub.Add(listSub[i] + s +",");
+                }
+            }
+        }
+        //
 
         // thêm sản phẩm vào giỏ hàng
         public ActionResult themSPVaoGioHang(int maSP, string strUrl)
