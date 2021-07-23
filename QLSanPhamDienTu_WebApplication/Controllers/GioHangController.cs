@@ -118,12 +118,24 @@ namespace QLSanPhamDienTu_WebApplication.Controllers
             {
                 foreach(var itemSP in listSanPhamTmp)
                 {
-                    if (itemGH.tenDanhMuc.Equals(itemSP.TenDanhMuc))
+                    if(itemGH.ghiChu.Equals("DienThoai")|| itemGH.ghiChu.Equals("Laptop"))
                     {
-                        var sp = listSanPham.SingleOrDefault(m => m.TenDanhMuc == itemGH.tenDanhMuc);
-                        listSanPham.Remove(sp);
-                        break;
-                    }    
+                        if(itemGH.ghiChu.Equals(itemSP.GhiChu))
+                        {
+                            var sp = listSanPham.SingleOrDefault(m => m.TenDanhMuc == itemGH.tenDanhMuc);
+                            listSanPham.Remove(sp);
+                            break;
+                        }
+                    }
+                    if(itemGH.ghiChu.Equals("PhuKien"))
+                    {
+                        if (itemGH.tenDanhMuc.Equals(itemSP.TenDanhMuc))
+                        {
+                            var sp = listSanPham.SingleOrDefault(m => m.TenDanhMuc == itemGH.tenDanhMuc);
+                            listSanPham.Remove(sp);
+                            break;
+                        }
+                    }
                 }    
             }    
             return listSanPham;
